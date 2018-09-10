@@ -30,7 +30,7 @@ CREATE TABLE items (
     borrowed BOOLEAN DEFAULT FALSE,
     promoted BOOLEAN DEFAULT FALSE,
     created TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp,
-    last_updated TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp,
+    last_updated TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp
 );
 
 CREATE TABLE item_images (
@@ -39,27 +39,27 @@ CREATE TABLE item_images (
     PRIMARY KEY (item_id, image_link)
 );
 
-CREATE TABLE loans (
-    owner_id INT REFERENCES users(id) ON DELETE CASCADE,
-    borrower_id INT REFERENCES users(id) ON DELETE CASCADE,
-    item_id INT REFERENCES items(id) ON DELETE CASCADE,
-    bid_id PRIMARY KEY INT REFERENCES bids(id) ON DELETE CASCADE,
-    created TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp,
-    CONSTRAINT borrower_id CHECK (owner_id != borrower_id)
-);
-
 CREATE TABLE bids (
     id SERIAL PRIMARY KEY,
     owner_id INT REFERENCES users(id) ON DELETE CASCADE,
     bidder_id INT REFERENCES users(id) ON DELETE CASCADE,
     item_id INT REFERENCES items(id) ON DELETE CASCADE,
     bid_price DECIMAL(8,2) NOT NULL CHECK (bid_price >= 0),
-    duration_of_loan INT NOT NULL CHECK (duration_of_loan > 0) AND (duration_of_loan < 30)
+    duration_of_loan INT NOT NULL CHECK (duration_of_loan > 0 AND duration_of_loan < 30),
     date_of_loan DATE NOT NULL,
     created TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp,
     last_updated TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp, 
     UNIQUE (owner_id, bidder_id, item_id),
     CONSTRAINT bidder_id CHECK (owner_id != bidder_id)
+);
+
+CREATE TABLE loans (
+    owner_id INT REFERENCES users(id) ON DELETE CASCADE,
+    borrower_id INT REFERENCES users(id) ON DELETE CASCADE,
+    item_id INT REFERENCES items(id) ON DELETE CASCADE,
+    bid_id INT PRIMARY KEY REFERENCES bids(id) ON DELETE CASCADE,
+    created TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp,
+    CONSTRAINT borrower_id CHECK (owner_id != borrower_id)
 );
 
 CREATE TABLE admins (
