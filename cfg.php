@@ -10,13 +10,21 @@
     $hostname = gethostname();
     if(substr($hostname,0,3) == "ip-") {
         // Production
-        $db_pass = "password";
-        $host = "";
-        $port = 5432;
-    } elseif(gethostname() == "Jin-Ying-Tan") {
-        $db_pass = JY_PASS;
+        $host = PROD_HOST;
+        $port = PROD_PORT;
+        $db_name = PROD_DBNAME;
+        $db_user = PROD_USER;
+        $db_pass = PROD_PASSWORD;
+        
+    } else {
+        //Server DB but local env.
+        $host = HOST;
+        $port = PORT;
+        $db_name = DBNAME;
+        $db_user = USER;
+        $db_pass = PASSWORD;
     }
-
+    
     pg_connect("host=" . $host . " port=" . $port . " dbname=" . $db_name . " user=" . $db_user . " password=" . $db_pass);
     pg_query('SET search_path TO lazalend');	
 ?>
