@@ -1,3 +1,5 @@
+SET search_path TO lazalend;
+
 DROP TABLE admins;
 DROP TABLE loans;
 DROP TABLE bids;
