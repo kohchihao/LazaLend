@@ -25,9 +25,6 @@
     } else {
         //Server DB but local env.
         $host = HOST;
-
-        if($hostname = "Jin-Ying-Tan") $host = JY_HOST;
-
         $port = PORT;
         $db_name = DBNAME;
         $db_user = USER;
