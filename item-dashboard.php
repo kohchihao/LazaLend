@@ -41,7 +41,7 @@
        )
     );
 
-    require $root."tpl/01-head.php";
+    require $root."template/01-head.php";
 ?>
 
 <section id = "item-dashboard">
@@ -73,3 +73,7 @@
 
     </form>
 </section>
+
+<?php
+    require $root."template/footer.php";
+?>

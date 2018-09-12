@@ -31,7 +31,7 @@
        )
     );
 
-    require $root."tpl/01-head.php";
+    require $root."template/01-head.php";
 ?>
 
 <section id = "ll">
@@ -61,3 +61,8 @@
     </div>
     
 </section>
+
+<?php
+    require $root."template/footer.php";
+?>
+
