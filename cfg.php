@@ -1,6 +1,12 @@
 <?php 
     require_once $root."secrets.php";
     
+    function pg_equery($query) {
+        $g = pg_query($query) or die($query."\n".pg_last_error()."\n");
+        
+        return $g;
+    }
+    
     /* DB CONNECTION */
     $db_name = "cs2102";
     $db_user = "postgres";
