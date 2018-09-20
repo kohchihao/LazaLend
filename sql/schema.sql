@@ -28,7 +28,7 @@ CREATE TABLE items (
     pickup_long DECIMAL(11,8) NOT NULL,
     return_lat DECIMAL(10,8) NOT NULL,
     return_long DECIMAL(11,8) NOT NULL,
-    date_avaiable DATE DEFAULT current_timestamp,
+    date_available DATE DEFAULT current_timestamp,
     borrowed BOOLEAN DEFAULT FALSE,
     promoted BOOLEAN DEFAULT FALSE,
     created TIMESTAMP WITH TIME ZONE DEFAULT current_timestamp,
