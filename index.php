@@ -2,7 +2,7 @@
     $root = __DIR__."/";
     require_once $root."cfg.php";
 
-    $query = 'SELECT id, name, description, fee, pickup_lat, pickup_long, return_lat, return_long, date_avaiable FROM items WHERE borrowed = FALSE';
+    $query = 'SELECT id, name, description, fee, pickup_lat, pickup_long, return_lat, return_long, date_available FROM items WHERE borrowed = FALSE';
     $go_q = pg_query($query);
     
     $items = Array();
@@ -15,18 +15,14 @@
         'HEAD' => Array (
             'TITLE' => 'LazaLend',
             'CSS' => '
-                <!-- BEGIN PAGE LEVEL STYLES -->
-                <style>
-                
-                </style>
-                <!-- END PAGE LEVEL STYLES -->
+                <!-- Include Your CSS Link Here -->
+                <link rel="stylesheet" href="./css/link.css">
             '
         ),
        'FOOTER' => Array (
             'JS' => '
-                <script>
-                
-                </script>
+                <!-- Include Your JavaScript Link Here -->
+                <script src = "./js/link.js">
             '
        )
     );

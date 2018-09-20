@@ -7,7 +7,7 @@
     // Update Items
     if(isset($_POST['update_item'])) {
         $update = "UPDATE items SET name = '" . $_POST['item_name'] . "', fee = " . $_POST['item_fee'] . " WHERE id = " . $item_id;
-        $go_u = pg_equery($update);
+        $go_u = pg_query($update);
 
         header("Location: /LazaLend/");
         die();
@@ -16,7 +16,7 @@
     
     
     // Item Details
-    $query = 'SELECT id, name, description, fee, pickup_lat, pickup_long, return_lat, return_long, date_avaiable FROM items WHERE id = ' . $item_id;
+    $query = 'SELECT id, name, description, fee, pickup_lat, pickup_long, return_lat, return_long, date_available FROM items WHERE id = ' . $item_id;
     $go_q = pg_query($query);
     $item = pg_fetch_assoc($go_q); 
     // End of Item Details
@@ -25,18 +25,14 @@
         'HEAD' => Array (
             'TITLE' => $item['name'],
             'CSS' => '
-                <!-- BEGIN PAGE LEVEL STYLES -->
-                <style>
-                
-                </style>
-                <!-- END PAGE LEVEL STYLES -->
+                <!-- Include Your CSS Link Here -->
+                <link rel="stylesheet" href="./css/link.css">
             '
         ),
        'FOOTER' => Array (
             'JS' => '
-                <script>
-                
-                </script>
+                <!-- Include Your JavaScript Link Here -->
+                <script src = "./js/link.js">
             '
        )
     );
