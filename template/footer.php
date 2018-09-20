@@ -7,6 +7,6 @@
         <?php if(isset($_M['FOOTER']['JS'])) echo $_M['FOOTER']['JS']; ?>
 
         <!-- Shared JavaScript -->
-        <script src="/js/ll.js?v=1"></script>
+        <script src="./js/ll.js?v=1"></script>
     </body>
 </html>
