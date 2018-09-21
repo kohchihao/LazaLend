@@ -1,6 +1,8 @@
 <?php
+session_start();
 $root = __DIR__ . "/";
 require_once $root . "cfg.php";
+require_once $root . "./template/template.php";
 
 $query = 'SELECT id, name, description, fee, pickup_lat, pickup_long, return_lat, return_long, date_available FROM items WHERE borrowed = FALSE';
 $go_q = pg_query($query);
@@ -11,32 +13,55 @@ while ($fe_q = pg_fetch_assoc($go_q)) {
     $items[$fe_q['id']] = $fe_q;
 }
 
-$_M = Array(
-    'HEAD' => Array (
+$_M = array(
+    'HEAD' => array(
         'TITLE' => 'LazaLend',
         'CSS' => '
             <!-- Include Your CSS Link Here -->
-            <link rel="stylesheet" href="./css/link.css">
-        '
+            <link rel="stylesheet" href="./css/index.css"></link>
+        ',
     ),
-   'FOOTER' => Array (
+    'FOOTER' => array(
         'JS' => '
             <!-- Include Your JavaScript Link Here -->
-            <script src = "./js/link.js">
-        '
-   )
+            <script src = "./js/index.js"></script>
+        ',
+    ),
 );
 
-$query = 'SELECT id,name, image_url FROM categories';
-$go_q = pg_query($query);
-$categories = array();
+// To display categories inside index.php
+$categories = getAllCategories();
 
-while ($fe_q = pg_fetch_assoc($go_q)) {
-    $categories[$fe_q['id']] = $fe_q;
+// Login
+if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $user = login($email, $password);
+    
+    if ($user) {
+        $_SESSION['loggedInUserId']= $user['id'];
+        $_SESSION['loggedInUsername']= $user['username'];
+        $_SESSION['loggedInUserEmail']= $user['email'];
+    } else {
+        $loggedFail = true;
+    }
+}
+
+// Register
+if (isset($_POST['register']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    
 }
 
 require $root . "template/01-head.php";
 ?>
+
+
 
 <div>
     <h6 class="padding-left-15">Explore LazaLend</h6>
@@ -86,44 +111,72 @@ require $root . "template/01-head.php";
                     <td class = "text-center">
                         <?=$item['fee']?>
                     </td>
-
-
                 </tr>
             <?php }?>
             </tbody>
         </table>
     </div>
-
 </section>
 
 
 <div class="modal" id="login-modal">
   <div class="modal-dialog">
     <div class="modal-content">
-
       <!-- Modal Header -->
       <div class="modal-header">
-        
+
         <h4 class="modal-title">Login to Your Account</h4><br>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
       <!-- Modal body -->
       <div class="modal-body">
-     
         <div class="loginmodal-container">
-            
-            <form class="login">
-                <input type="text" name="user" placeholder="Username">
-                <input type="password" name="pass" placeholder="Password">
+            <form class="login" action="" method="POST">
+                <input type="text" name="email" placeholder="Email">
+                <input type="password" name="password" placeholder="Password">
                 <input type="submit" name="login" class="login loginmodal-submit" value="Login">
             </form>
-            
+
             <div class="login-help">
                 <a href="#">Register</a> - <a href="#">Forgot Password</a>
             </div>
         </div>
-			
+
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="register-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+
+        <h4 class="modal-title">Register your account</h4><br>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="loginmodal-container">
+            <form class="register" action="" method="POST">
+                <input type="text" name="email" placeholder="Email">
+                <input type="password" name="password" placeholder="Password">
+                <input type="submit" name="login" class="login loginmodal-submit" value="Login">
+            </form>
+
+            <div class="login-help">
+                <a href="#">Register</a> - <a href="#">Forgot Password</a>
+            </div>
+        </div>
       </div>
 
       <!-- Modal footer -->
@@ -139,3 +192,7 @@ require $root . "template/01-head.php";
 require $root . "template/footer.php";
 ?>
 
+<?php 
+if ($loggedFail) { ?>
+    <script>loginFail();</script>
+<?php } ?> 
