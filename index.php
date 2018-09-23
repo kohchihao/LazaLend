@@ -44,6 +44,9 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
         $_SESSION['loggedInUserId'] = $user['id'];
         $_SESSION['loggedInUsername'] = $user['username'];
         $_SESSION['loggedInUserEmail'] = $user['email'];
+
+        $loggedFail = false;
+        header("location: /LazaLend");
     } else {
         $loggedFail = true;
     }
@@ -64,6 +67,8 @@ if (isset($_POST['register']) && !empty($_POST['email']) && !empty($_POST['usern
         $_SESSION['loggedInUserId'] = $user['id'];
         $_SESSION['loggedInUsername'] = $user['username'];
         $_SESSION['loggedInUserEmail'] = $user['email'];
+        $registerFail = false;
+        header("location: /LazaLend");
     } else {
         $registerFail = true;
     }

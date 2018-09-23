@@ -72,7 +72,7 @@
 
                         <li class="nav-item">
 
-                            <a href="#" class="nav-link m-2 menu-item active text-light">List</a>
+                            <a href="#" class="nav-link m-2 menu-item active text-light">Loan</a>
                         </li>
                     </ul>
                 </div>
