@@ -16,7 +16,7 @@ $('body').on("change", ".image_input", function() {
 });
 
 $('body').on("change", "#loan_images_1", function (){
-    $('.loan-submit').prop('disabled', false);
+    $('#go-to-category-btn').prop('disabled', false);
 });
 
 function del_loan_image(e) {
@@ -33,6 +33,28 @@ function del_loan_image(e) {
     );
 
     if(id === 1) {
-        $('.loan-submit').prop('disabled', true);
+        $('#go-to-category-btn').prop('disabled', true);
     }
+}
+
+function select_category(category_id) {
+    $('#select_category').attr('value', category_id);
+    
+    $('#loan-categories').hide();
+    $('#loan-details').show();
+}
+
+function go_to_loan_category() {
+    $('#loan-images').hide();
+    $('#loan-categories').show();
+}
+
+function back_to_loan_image() {
+    $('#loan-categories').hide();
+    $('#loan-images').show();
+}
+
+function back_to_loan_category() {
+    $('#loan-categories').show();
+    $('#loan-details').show();
 }

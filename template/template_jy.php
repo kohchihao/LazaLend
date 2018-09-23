@@ -26,4 +26,8 @@
 
         return $html;
     }
+
+    function isValidImage() {
+
+    }
 ?>
