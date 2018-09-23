@@ -7,5 +7,7 @@
         require $root."index.php";
     } elseif ($just_url[0] == "/LazaLend/item-dashboard") {
         require $root."item-dashboard.php";
+    } elseif ($just_url[0] == "/LazaLend/logout") {
+        require $root."logout.php";
     }
 ?>
