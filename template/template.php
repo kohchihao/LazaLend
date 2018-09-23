@@ -71,6 +71,11 @@ function getAllCategories() {
   return $categories;
 }
 
+//Fetch all promoted items 
+function getAllPromotedItems() {
+  
+}
+
 //utility - Wrap value inside a ' ' 
 function string($value) {
   return "'$value'";
