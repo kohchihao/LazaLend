@@ -23,6 +23,38 @@
   object-fit: cover;
 }
 
+.img-promoted {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border:1px;
+}
+
+.panel-thumbnail-promoted{
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.thumb-promoted {
+  color: white;
+}
+
+/* Bottom left text */
+.bottom-left {
+  position: absolute;
+  bottom: 0px;
+  background-color: #000000; 
+  opacity: 0.65;
+  height: 50px;
+  text-align: left;
+}
+
+.whitetext {
+  color: white;
+  font-size: 15px;
+}
+
 .centertext {
   text-align: center;
   font-size: 12px;

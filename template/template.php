@@ -73,7 +73,21 @@ function getAllCategories() {
 
 //Fetch all promoted items 
 function getAllPromotedItems() {
+  $query = "SELECT item.id, item.name, item.description, image.image_link FROM items item, item_images image
+  WHERE item.id = image.item_id
+  AND item.promoted = true";
+
+  $go_q = pg_query($query);
+  $promoted = array();
+
+  while ($fe_q = pg_fetch_assoc($go_q)) {
+    $promoted[$fe_q['id']]['name'] = $fe_q['name'];
+    $promoted[$fe_q['id']]['description'] = $fe_q['description'];
+    $promoted[$fe_q['id']]['images'][] = array('image_link' => $fe_q['image_link']);
+  }
   
+  return $promoted;
+
 }
 
 //utility - Wrap value inside a ' ' 
