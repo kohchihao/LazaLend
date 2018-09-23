@@ -28,8 +28,28 @@ function login($email, $password) {
 }
 
 // Register user function
-function register() {
-    //$hashedPassword =  password_hash($password, PASSWORD_BCRYPT);
+function register($email, $username, $password, $first_name, $last_name) {
+  
+  $hashedPassword =  password_hash($password, PASSWORD_BCRYPT);
+  $query = "INSERT INTO users(username, password, first_name, last_name, email) VALUES ("
+    . string($username) . ","
+    . string($hashedPassword) . ","
+    . string($first_name) . ","
+    . string($last_name) . ","
+    . string($email) 
+    . ") ";
+
+  $go_q = pg_query($query);
+  
+  if ($go_q) { //registered successfully
+    $query = "SELECT id, username, first_name, last_name, email FROM users WHERE email = ". string($email);
+    $go_q = pg_query($query);
+    $user = pg_fetch_assoc($go_q);
+    return $user;
+  } else { 
+    return null;
+  }
+  
 }
 
 //Logout
@@ -51,4 +71,8 @@ function getAllCategories() {
   return $categories;
 }
 
+//utility - Wrap value inside a ' ' 
+function string($value) {
+  return "'$value'";
+}
 ?>

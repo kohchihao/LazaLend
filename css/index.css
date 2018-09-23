@@ -39,7 +39,7 @@
 }
 
 /****** LOGIN MODAL ******/
-.loginmodal-container {
+.loginmodal-container, .registermodal-container{
   padding: 30px;
   width: 100% !important;
   border-radius: 2px;
@@ -47,13 +47,13 @@
   font-family: roboto;
 }
 
-.loginmodal-container h1 {
+.loginmodal-container h1, .registermodal-container h1 {
   text-align: center;
   font-size: 1.8em;
   font-family: roboto;
 }
 
-.loginmodal-container input[type='text'],
+.loginmodal-container input[type='text'], .registermodal-container input[type='text'],
 input[type='password'] {
   height: 44px;
   font-size: 16px;
@@ -73,7 +73,7 @@ form {
   width: 100%;
 }
 
-.loginmodal-container input[type='text']:hover,
+.loginmodal-container input[type='text']:hover, .registermodal-container input[type='text']:hover,
 input[type='password']:hover {
   border: 1px solid #b9b9b9;
   border-top: 1px solid #a0a0a0;
@@ -82,7 +82,7 @@ input[type='password']:hover {
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.loginmodal {
+.loginmodal, .registermodal{
   text-align: center;
   font-size: 14px;
   font-family: 'Arial', sans-serif;
@@ -94,7 +94,7 @@ input[type='password']:hover {
   user-select: none;
 }
 
-.loginmodal-container input[type='submit'] {
+.loginmodal-container input[type='submit'], .registermodal-container input[type='submit'] {
   width: 100%;
   height: 44px;
   margin-bottom: 10px;
@@ -102,7 +102,7 @@ input[type='password']:hover {
   border-radius: 5px;
 }
 
-.loginmodal-submit {
+.loginmodal-submit, .registermodal-submit{
   border: 0px;
   color: #fff;
   background-color: #4d90fe;
@@ -113,13 +113,13 @@ input[type='password']:hover {
   align-items: center;
 }
 
-.loginmodal-submit:hover {
+.loginmodal-submit:hover, .registermodal-submit:hover{
   border: 0px;
   text-shadow: 0 1px rgba(0, 0, 0, 0.3);
   background-color: #357ae8;
 }
 
-.loginmodal-container a {
+.loginmodal-container a, .registermodal-container a {
   text-decoration: none;
   color: #666;
   font-weight: 400;
