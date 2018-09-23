@@ -39,23 +39,34 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
     $password = $_POST['password'];
 
     $user = login($email, $password);
-    
+
     if ($user) {
-        $_SESSION['loggedInUserId']= $user['id'];
-        $_SESSION['loggedInUsername']= $user['username'];
-        $_SESSION['loggedInUserEmail']= $user['email'];
+        $_SESSION['loggedInUserId'] = $user['id'];
+        $_SESSION['loggedInUsername'] = $user['username'];
+        $_SESSION['loggedInUserEmail'] = $user['email'];
     } else {
         $loggedFail = true;
     }
 }
 
 // Register
-if (isset($_POST['register']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+if (isset($_POST['register']) && !empty($_POST['email']) && !empty($_POST['username']) && !empty($_POST['password'])
+    && !empty($_POST['first_name']) && !empty($_POST['last_name'])) {
 
     $email = $_POST['email'];
+    $username = $_POST['username'];
     $password = $_POST['password'];
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
 
-    
+    $user = register($email, $username, $password, $first_name, $last_name);
+    if ($user) {
+        $_SESSION['loggedInUserId'] = $user['id'];
+        $_SESSION['loggedInUsername'] = $user['username'];
+        $_SESSION['loggedInUserEmail'] = $user['email'];
+    } else {
+        $registerFail = true;
+    }
 }
 
 require $root . "template/01-head.php";
@@ -139,7 +150,7 @@ require $root . "template/01-head.php";
             </form>
 
             <div class="login-help">
-                <a href="#">Register</a> - <a href="#">Forgot Password</a>
+                <a href="#">Forgot Password</a>
             </div>
         </div>
 
@@ -166,16 +177,15 @@ require $root . "template/01-head.php";
 
       <!-- Modal body -->
       <div class="modal-body">
-        <div class="loginmodal-container">
+        <div class="registermodal-container">
             <form class="register" action="" method="POST">
                 <input type="text" name="email" placeholder="Email">
+                <input type="text" name="username" placeholder="Username">
                 <input type="password" name="password" placeholder="Password">
-                <input type="submit" name="login" class="login loginmodal-submit" value="Login">
+                <input type="text" name="first_name" placeholder="First Name">
+                <input type="text" name="last_name" placeholder="Last Name">
+                <input type="submit" name="register" class="register registermodal-submit" value="Register">
             </form>
-
-            <div class="login-help">
-                <a href="#">Register</a> - <a href="#">Forgot Password</a>
-            </div>
         </div>
       </div>
 
@@ -192,7 +202,9 @@ require $root . "template/01-head.php";
 require $root . "template/footer.php";
 ?>
 
-<?php 
-if ($loggedFail) { ?>
+<?php
+if ($loggedFail) {?>
     <script>loginFail();</script>
-<?php } ?> 
+<?php } elseif ($registerFail) {?>
+    <script>registerFail();</script>
+<?php } ?>
