@@ -23,7 +23,7 @@
     <!-- END HEAD -->
 
     <body>
-        <div class = "container">
+        <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="d-flex flex-grow-1">
                     <span class="w-100 d-lg-none d-block"><!-- hidden spacer to center brand on mobile --></span>
@@ -72,10 +72,18 @@
 
                         <li class="nav-item">
 
+<<<<<<< HEAD
                             <a href="/LazaLend/loan-item" class="nav-link m-2 menu-item active text-light">List</a>
+=======
+                            <a href="#" class="nav-link m-2 menu-item active text-light">Loan</a>
+>>>>>>> master
                         </li>
                     </ul>
                 </div>
             </nav>
+        </div>
+        
+        <div class = "container">
+            
 
 

@@ -44,6 +44,9 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
         $_SESSION['loggedInUserId'] = $user['id'];
         $_SESSION['loggedInUsername'] = $user['username'];
         $_SESSION['loggedInUserEmail'] = $user['email'];
+
+        $loggedFail = false;
+        header("location: /LazaLend");
     } else {
         $loggedFail = true;
     }
@@ -64,10 +67,14 @@ if (isset($_POST['register']) && !empty($_POST['email']) && !empty($_POST['usern
         $_SESSION['loggedInUserId'] = $user['id'];
         $_SESSION['loggedInUsername'] = $user['username'];
         $_SESSION['loggedInUserEmail'] = $user['email'];
+        $registerFail = false;
+        header("location: /LazaLend");
     } else {
         $registerFail = true;
     }
 }
+
+$promoted = getAllPromotedItems();
 
 require $root . "template/01-head.php";
 ?>
@@ -101,34 +108,34 @@ require $root . "template/01-head.php";
     </div>
 </div>
 
-
-<section id = "ll">
-    <div class = "">
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th class = "text-center">Name</th>
-                    <th class = "text-center">Fee</th>
-                </tr>
-            </thead>
-
-            <tbody>
-            <?php foreach ($items as $item_id => $item) {?>
-                <tr>
-                    <td class = "text-center">
-                        <a href = "item-dashboard?id=<?=$item_id?>"><?=$item['name']?></a>
-                    </td>
-
-                    <td class = "text-center">
-                        <?=$item['fee']?>
-                    </td>
-                </tr>
+<div>
+    <h6 class="padding-left-15">Promoted Items</h6>
+    <div class="scrolling-wrapper-flexbox">
+        <?php foreach ($promoted as $item_id => $item) {?>
+            <?php if ($item_id === 1) {?>
+                <div class="col-5 col-md-4 active">
+            <?php } else {?>
+                <div class="col-5 col-md-4">
             <?php }?>
-            </tbody>
-        </table>
-    </div>
-</section>
 
+                <div class="panel panel-default">
+                    <div class="panel-thumbnail-promoted">
+                        <a href="#" title="image 1" class="thumb-promoted">
+                            <img class="img-promoted" src="<?='.'.$item['images'][0]['image_link']?>" alt="slide 1">
+                            <div class="container bottom-left">
+                                <span class="whitetext">
+                                    <?=$item['name']?>
+                                </span>
+                            </div>
+                            
+                        </a>
+                        
+                    </div>
+                </div>
+            </div>
+        <?php }?>
+    </div>
+</div>
 
 <div class="modal" id="login-modal">
   <div class="modal-dialog">
