@@ -9,8 +9,75 @@
         header('Location: /LazaLend');
     } 
 
+    $user_id = $_SESSION['loggedInUserId'];
+    $errors = Array();
+
     if(isset($_POST['loan_item_submit'])) {
+        $base_url = "https://" . MAPS_HOST . "/maps/api/geocode/json?key=" . GMAPS_API_KEY;
         
+        $request_pickup_url = $base_url . "&address=" . urlencode($_POST['item_pickup']);
+        // $pickup_json = file_get_contents($request_pickup_url);
+        // $pickup_obj = json_decode($pickup_json);
+
+        // $pickup_status = $pickup_obj->status;
+        $pickup_status = "OK";
+        $pickup_lat = "";
+        $pickup_long = "";
+        $return_lat = "";
+        $return_long = "";
+
+        if($pickup_status == "OK") {
+            // $pickup_lat = $pickup_obj->results[0]->geometry->location->lat;
+            // $pickup_long = $pickup_obj->results[0]->geometry->location->lng;
+            $pickup_lat = "1.28733380";
+            $pickup_long = "1.28733380";
+            if($_POST['item_return'] == "") {
+                $return_lat = $pickup_lat;
+                $return_long = $pickup_long;
+            }
+        } else {
+            $errors['location'] = "Invalid Pickup Location";
+        }
+
+        if($_POST['item_return'] != "") {
+            // $request_return_url = $base_url . "&address=" . urlencode($_POST['item_pickup']);
+            // $return_json = file_get_contents($request_return_url);
+            // $return_obj = json_decode($pickup_json);
+            $return_status = "OK";
+            // $return_status = $return_obj->status;
+
+            if($return_status == "OK") {
+                // $return_lat = $return_obj->results[0]->geometry->location->lat;
+                // $return_long = $return_obj->results[0]->geometry->location->lng;
+                $return_lat = "1.28733380";
+                $return_long = "1.28733380";
+            } else {
+                if(sizeof($errors)) {
+                    $errors['location'] = "Invalid Pickup & Return Location";
+                } else {
+                    $errors['location'] = "Invalid Return Location";
+                }
+            }
+        }
+
+        if(sizeof($errors) == 0 && $_POST['item_fee'] < 1000000) {
+           $insert = "INSERT INTO items (user_id, category_id, fee, name, description, pickup_lat, pickup_long, return_lat, return_long, date_available)
+                VALUES (".$user_id.", ".$_POST['select_category'].", ".$_POST['item_fee'].", '".$_POST['item_name']."', '".$_POST['item_description']."', '".$pickup_lat."', '".$pickup_long."', '".$return_lat."', '".$return_lat."', '".$_POST['item_available']."') 
+                RETURNING id
+                ";
+           
+           $go_i = pg_equery($insert);
+
+           $item_id = pg_fetch_row($go_i)[0];
+        } else {
+            if($_POST['item_fee'] >= 1000000) {
+                $errors['fee'] = "Item Fee can be more than $999,999";
+            }
+
+            var_dump($errors);
+        }
+
+        die;
     }
 
     $categories = Array();
