@@ -71,12 +71,7 @@
                         <?php }?>
 
                         <li class="nav-item">
-
-<<<<<<< HEAD
                             <a href="/LazaLend/loan-item" class="nav-link m-2 menu-item active text-light">List</a>
-=======
-                            <a href="#" class="nav-link m-2 menu-item active text-light">Loan</a>
->>>>>>> master
                         </li>
                     </ul>
                 </div>
