@@ -72,7 +72,7 @@
 
                         <li class="nav-item">
 
-                            <a href="#" class="nav-link m-2 menu-item active text-light">List</a>
+                            <a href="/LazaLend/loan-item" class="nav-link m-2 menu-item active text-light">List</a>
                         </li>
                     </ul>
                 </div>
