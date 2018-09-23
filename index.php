@@ -94,7 +94,7 @@ require $root . "template/01-head.php";
 
                 <div class="panel panel-default">
                     <div class="panel-thumbnail">
-                        <a href="#" title="image 1" class="thumb">
+                        <a href="categories?id=<?=$category_id?>" title="image 1" class="thumb">
                             <img class="img-fluid mx-auto d-block img-carousel" src="<?=$category['image_url']?>" alt="slide 1">
                         </a>
                         <div class="container centertext">
