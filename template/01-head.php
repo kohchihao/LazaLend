@@ -31,7 +31,7 @@
                         <a class="navbar-brand d-none d-lg-inline-block" href="./">
                             LazaLend
                         </a>
-                        <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="#">
+                        <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="./">
                             LazaLend
                         </a>
                         <div class="w-100 text-right">
