@@ -28,7 +28,7 @@
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <div class="d-flex flex-grow-1">
                         <span class="w-100 d-lg-none d-block"><!-- hidden spacer to center brand on mobile --></span>
-                        <a class="navbar-brand d-none d-lg-inline-block" href="#">
+                        <a class="navbar-brand d-none d-lg-inline-block" href="./">
                             LazaLend
                         </a>
                         <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="#">
