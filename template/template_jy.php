@@ -27,7 +27,27 @@
         return $html;
     }
 
-    function isValidImage() {
+    function isValidImage($target_file) {
+        $image_file_type = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
+        // Check if file already exists
+        if (file_exists($target_file)) {
+            return false;
+        }
+
+        // Allow certain file formats
+        if($image_file_type != "jpg" && $image_file_type != "png" && $image_file_type != "jpeg") {
+            return false;
+        }
+
+        return true;
+    }
+
+    function isEmptyField($field) {
+        if($field == "") {
+            return true;
+        }
+
+        return false;
     }
 ?>
