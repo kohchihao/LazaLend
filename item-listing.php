@@ -15,7 +15,7 @@
     // End of Update Items
 
     // Item Details
-    $query = 'SELECT id, name, description, fee, pickup_lat, pickup_long, return_lat, return_long, date_available
+    $query = 'SELECT id, user_id, name, description, fee, pickup_lat, pickup_long, return_lat, return_long, date_available, borrowed
       FROM items WHERE id = ' . $item_id;
     $go_q = pg_equery($query);
     $item_details = array();
@@ -54,7 +54,7 @@ require $root."template/01-head.php";
 
     <section id = "item-details">
         <div class = "row mt-3">
-            <div class = "col-md-6 equal">
+            <div class = "col-md-6">
                 <div id="item-image-carousel" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <?php
@@ -82,30 +82,20 @@ require $root."template/01-head.php";
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
-                <!--<div class = "row align-items-center">
-                    <div class = "col-2">
-                        <div id = "item_image_left" onclick = "prev_image()">&lt;</div>
-                    </div>
-                    <div class = "col-8" data-active-image = "0" data-last-image = "<=count($item_images) - 1?>" id = "item_image_wrapper">
-                        <php
-                        foreach ($item_images as $image_index=>$image_link) {
-                            echo '<img class = "img-fluid.max-width: 100% height:auto"
-                        id = "item_image_'.$image_index.'"
-                        style = "display: '.($image_index==0?'initial':'none').'"
-                        src = ".'.$image_link.'" />';
-                        }
-                        ?>
-                    </div>
-                    <div class = "col-2">
-                        <div class = "col" id = "item_image_right" onclick = "next_image()">&gt;</div>
-                    </div>
-                </div>-->
+                <!-- only show delete option if owner is logged in -->
+                <?php if (isset($_SESSION['loggedInUserId']) && $_SESSION['loggedInUserId'] == $item_details['user_id']) {?>
+                    <a href="delete-item.php?id=<?=$item_id?>">Delete Listing</a>
+                <?php } ?>
 
             </div>
-            <div class = "col-md-6 equal">
+            <div class = "col-md-6">
                 <div class = "row">
                     <div class = "h3"><?=$item_details['name'] ?></div>
                 </div>
+                <!-- only show edit option if owner is logged in -->
+                <?php if (isset($_SESSION['loggedInUserId']) && $_SESSION['loggedInUserId'] == $item_details['user_id']) {?>
+                    <a href="item-dashboard.php?id=<?=$item_id?>">Edit Listing</a>
+                <?php } ?>
                 <div class = "row mt-5 mb-3">
                     <div class = "col-md-4">Description:</div>
                     <div class = "col-md-8"><?=$item_details['description'] ?></div>
@@ -126,18 +116,6 @@ require $root."template/01-head.php";
                     <div class = "col-md-4">Return Location:</div>
                     <div class = "col-md-8">WIP</div>
                 </div>
-            </div>
-        </div>
-        <div class = "row align-items-end">
-            <div class = "col-md-6"></div>
-            <div class = "col-md-6">
-            <?php if (isset($_SESSION['loggedInUserId'])) {?>
-                <a href="/LazaLend/view-bids.php" >View Bids</a>
-                <a href="/LazaLend/make-bid.php" >Make Bid</a>
-            <?php } else {?>
-                <a href="#" class="nav-link m-2 menu-item" data-target="#login-modal" data-toggle="modal">Login</a>
-                <a href="#" class="nav-link m-2 menu-item" data-target="#register-modal" data-toggle="modal">Sign Up</a>
-            <?php }?>
             </div>
         </div>
     </section>
