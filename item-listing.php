@@ -35,7 +35,7 @@
 
     $_M = Array(
         'HEAD' => Array (
-            'TITLE' => 'Item Listing: '.$fe_q['name'],
+            'TITLE' => 'Item Listing: '.$item_details['name'],
             'CSS' => '
                 <!-- Include Your CSS Link Here -->
                 <link rel="stylesheet" href="./css/item-listing.css">
@@ -112,7 +112,7 @@ require $root."template/01-head.php";
                 </div>
                 <div class = "row mt-3 mb-5">
                     <div class = "col-md-4">Fee:</div>
-                    <div class = "col-md-8">$<?=$item_details['fee'] ?></div>
+                    <div class = "col-md-8">$<?=$item_details['fee'] ?>/day</div>
                 </div>
                 <div class = "row mt-5 mb-5">
                     <div class = "col-md-4">Date Available:</div>
