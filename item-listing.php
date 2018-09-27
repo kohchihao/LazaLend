@@ -2,7 +2,7 @@
     $root = __DIR__."/";
     require_once $root."cfg.php";
 
-    $item_id = $_GET['item'];
+    $item_id = $_GET['id'];
 
     // Update Items
     if(isset($_POST['update_item'])) {
@@ -132,8 +132,8 @@ require $root."template/01-head.php";
             <div class = "col-md-6"></div>
             <div class = "col-md-6">
             <?php if (isset($_SESSION['loggedInUserId'])) {?>
-                <a href="/LazaLend/view-bids" class="nav-link m-2 menu-item active text-light">View Bids</a>
-                <a href="/LazaLend/make-bid" class="nav-link m-2 menu-item active text-light">Make Bid</a>
+                <a href="/LazaLend/view-bids.php" >View Bids</a>
+                <a href="/LazaLend/make-bid.php" >Make Bid</a>
             <?php } else {?>
                 <a href="#" class="nav-link m-2 menu-item" data-target="#login-modal" data-toggle="modal">Login</a>
                 <a href="#" class="nav-link m-2 menu-item" data-target="#register-modal" data-toggle="modal">Sign Up</a>
