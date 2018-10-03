@@ -39,6 +39,7 @@ CREATE TABLE items (
 CREATE TABLE item_images (
     item_id INT REFERENCES items(id) ON DELETE CASCADE,
     image_link TEXT NOT NULL,
+    cover BOOLEAN DEFAULT FALSE,
     PRIMARY KEY (item_id, image_link)
 );
 

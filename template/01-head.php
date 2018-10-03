@@ -31,7 +31,7 @@
                         <a class="navbar-brand d-none d-lg-inline-block" href="./">
                             LazaLend
                         </a>
-                        <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="#">
+                        <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="./">
                             LazaLend
                         </a>
 
@@ -96,7 +96,7 @@
 
                             <li class="nav-item">
 
-                                <a href="#" class="nav-link m-2 menu-item active text-light">Loan</a>
+                                <a href="/LazaLend/loan-item" class="nav-link m-2 menu-item active text-light">Loan</a>
                             </li>
                         </ul>
                     </div>
@@ -104,8 +104,4 @@
             </div>
         </div>
 
-
         <div class = "container">
-
-
-
