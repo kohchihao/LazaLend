@@ -1,6 +1,7 @@
 <?php
     $root = __DIR__."/";
     require_once $root."cfg.php";
+    require_once $root . "./template/template.php";
 
     $item_id = $_GET['id'];
 
@@ -121,5 +122,6 @@ require $root."template/01-head.php";
     </section>
 
 <?php
+    require_once $root . "./template/modal.php";
     require $root."template/footer.php";
 ?>
