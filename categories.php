@@ -82,3 +82,7 @@
         <?php } ?>
     </div>
 </div>
+
+<?php
+require $root . "template/footer.php";
+?>
