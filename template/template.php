@@ -206,8 +206,7 @@ function string($value) {
 }
 
 //utility - Get how long the time is compared to now. Eg: 1 hour ago.
-function get_time_ago( $time )
-{
+function get_time_ago($time) {
     $time_difference = time() - $time;
 
     if( $time_difference < 1 ) { return 'less than 1 second ago'; }
