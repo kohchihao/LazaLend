@@ -122,6 +122,5 @@ require $root."template/01-head.php";
     </section>
 
 <?php
-    require_once $root . "./template/modal.php";
     require $root."template/footer.php";
 ?>

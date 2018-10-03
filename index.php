@@ -172,7 +172,6 @@ require $root . "template/01-head.php";
 
 
 <?php
-require_once $root . "./template/modal.php";
 require $root . "template/footer.php";
 ?>
 
