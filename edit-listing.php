@@ -186,15 +186,16 @@
         </div>
 
         <div class = "loan-images-container row">
-            <?php
-                foreach($item_images as $counter=>$item_image) {?>
+            <?php foreach($item_images as $counter=>$item_image) {?>
                     <div class="col-sm-6 loan-images">
                         <?=image_selected($counter, $item_image['image_link'])?>
                     </div>
+                <?php}
+                for($i = count($item_images); $i < 4; $i++) {?>
+                    <div class="col-sm-6 loan-images">
+                        <?=no_image_selected($i)?>
+                    </div>
                 <?php}?>
-            <div class="col-sm-6 loan-images">
-                <?=no_image_selected(count($item_images))?>
-            </div>
         </div>
 
         <div class = "btn-container">
@@ -217,7 +218,7 @@
             <ul class = "categories">
                 <?php foreach($categories as $category) { ?>
                 <li class = "category">
-                    <a class = "category-text" onclick = "select_category(<?=$category['id']?>)"><?=$category['name']?><?=($category['id'] == $item_details['category_id'])?'(Current Category':''{?></a>
+                    <a class = "category-text" onclick = "select_category(<?=$category['id']?>)"><?=$category['name']?><?=($category['id'] == $item_details['category_id'])?'(Current Category)':''?></a>
                 </li>
                 <?php } ?>
             </ul>
