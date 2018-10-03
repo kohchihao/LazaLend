@@ -93,29 +93,30 @@ function getAllPromotedItems() {
 //Fetch all items in chrological order 
 function getAllItemsChronological() {
   $query = "SELECT 
-    item.id AS item_id,
-    item.name AS item_name,
-    item.fee AS item_fee,
-    item.description AS item_description,
-    item.pickup_lat AS item_pickup_lat,
-    item.pickup_long AS item_pickup_long,
-    item.return_lat AS item_return_lat,
-    item.return_long AS item_return_long,
-    item.date_available AS item_date_available,
-    item.borrowed AS item_borrowed,
-    item.promoted AS item_promoted,
-    item.created AS item_created,
-    item.last_updated AS item_last_updated,
-    c.name AS categories_name,
-    c.image_url AS categories_image_url,
-    u.username AS user_username,
-    u.profile_image_url AS user_profile_image_url,
-    image.image_link
-    FROM items item, item_images image, categories c, users u
-    WHERE item.id = image.item_id 
-    AND item.category_id = c.id
-    AND item.user_id = u.id
-    ORDER BY item.last_updated DESC";
+  item.id AS item_id,
+  item.name AS item_name,
+  item.fee AS item_fee,
+  item.description AS item_description,
+  item.pickup_lat AS item_pickup_lat,
+  item.pickup_long AS item_pickup_long,
+  item.return_lat AS item_return_lat,
+  item.return_long AS item_return_long,
+  item.date_available AS item_date_available,
+  item.borrowed AS item_borrowed,
+  item.promoted AS item_promoted,
+  item.created AS item_created,
+  item.last_updated AS item_last_updated,
+  c.name AS categories_name,
+  c.image_url AS categories_image_url,
+  u.username AS user_username,
+  u.profile_image_url AS user_profile_image_url,
+  image.image_link,
+  image.cover AS cover_image
+  FROM items item, item_images image, categories c, users u
+  WHERE item.id = image.item_id 
+  AND item.category_id = c.id
+  AND item.user_id = u.id
+  ORDER BY item.last_updated DESC";
   
   $go_q = pg_query($query);
   $items = array();
@@ -138,9 +139,15 @@ function getAllItemsChronological() {
     $items[$fe_q['item_id']]['categories_image_url'] = $fe_q['categories_image_url'];
     $items[$fe_q['item_id']]['username'] = $fe_q['user_username'];
     $items[$fe_q['item_id']]['profile_image_url'] = $fe_q['user_profile_image_url'];
-    $items[$fe_q['item_id']]['images'][] = array('image_link' => $fe_q['image_link']);
+    
+    if ($fe_q['cover_image'] == t) {
+      $items[$fe_q['item_id']]['cover_image'] = $fe_q['image_link'];
+    } else {
+      $items[$fe_q['item_id']]['images'][] = array('image_link' => $fe_q['image_link']);
+    }
+    
   }
-
+  
   return $items;
 
 }
