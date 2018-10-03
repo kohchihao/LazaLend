@@ -142,7 +142,7 @@ require $root . "template/01-head.php";
     <h6 class="padding-left-15">Fresh Finds</h6>
     <div class="finds-container">
         <?php foreach ($items as $item_id => $item) {?>
-            <a href="item-listing.php?id=<?=$item_id?>">
+            <a href="item-listing?id=<?=$item_id?>">
                 <div class="item-container col-md-4">   
                     <div class="item-header">
                         <div class="pull-left">
@@ -157,7 +157,7 @@ require $root . "template/01-head.php";
                     </div>
                 
                     <div class="item-content">
-                        <img class="item-picture" src="<?='.'.$item['images'][0]['image_link']?>">
+                        <img class="item-picture" src="<?='.'.$item['cover_image']?>">
                         <div class="item-content-name"><?=$item['name']?></div>
                         <div class="item-content-fee">$S<?=$item['fee']?>/day</div>
                         <div class="item-content-description"><?=$item['description']?></div>

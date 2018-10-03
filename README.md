@@ -26,6 +26,9 @@ define("DBNAME","cs2102");
 define("USER","postgres");
 define("PASSWORD","<password here>");
 
+define("MAPS_HOST", "maps.googleapis.com");
+define("GMAPS_API_KEY", "<take from chihao or jinying>");
+
 ?>
 
 ```

@@ -72,7 +72,7 @@
                     </div>
                 
                     <div class="item-content">
-                        <img class="item-picture" src="<?='.'.$item['images'][0]['image_link']?>">
+                        <img class="item-picture" src="<?='.'.$item['cover_image']?>">
                         <div class="item-content-name"><?=$item['name']?></div>
                         <div class="item-content-fee">$S<?=$item['fee']?>/day</div>
                         <div class="item-content-description"><?=$item['description']?></div>
@@ -82,3 +82,7 @@
         <?php } ?>
     </div>
 </div>
+
+<?php
+require $root . "template/footer.php";
+?>
