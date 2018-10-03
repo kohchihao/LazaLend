@@ -142,7 +142,7 @@ require $root . "template/01-head.php";
     <h6 class="padding-left-15">Fresh Finds</h6>
     <div class="finds-container">
         <?php foreach ($items as $item_id => $item) {?>
-            <a href="item-listing.php?id=<?=$item_id?>">
+            <a href="view-listing.php?id=<?=$item_id?>">
                 <div class="item-container col-md-4">   
                     <div class="item-header">
                         <div class="pull-left">

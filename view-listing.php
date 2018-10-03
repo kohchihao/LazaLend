@@ -84,7 +84,7 @@ require $root."template/01-head.php";
                 </div>
                 <!-- only show delete option if owner is logged in -->
                 <?php if (isset($_SESSION['loggedInUserId']) && $_SESSION['loggedInUserId'] == $item_details['user_id']) {?>
-                    <a href="delete-item.php?id=<?=$item_id?>">Delete Listing</a>
+                    <a href="edit-listing.php?delete=true&id=<?=$item_id?>">Delete Listing</a>
                 <?php } ?>
 
             </div>
@@ -94,7 +94,7 @@ require $root."template/01-head.php";
                 </div>
                 <!-- only show edit option if owner is logged in -->
                 <?php if (isset($_SESSION['loggedInUserId']) && $_SESSION['loggedInUserId'] == $item_details['user_id']) {?>
-                    <a href="item-dashboard.php?id=<?=$item_id?>">Edit Listing</a>
+                    <a href="edit-listing.php?id=<?=$item_id?>">Edit Listing</a>
                 <?php } ?>
                 <div class = "row mt-5 mb-3">
                     <div class = "col-md-4">Description:</div>
@@ -108,6 +108,7 @@ require $root."template/01-head.php";
                     <div class = "col-md-4">Date Available:</div>
                     <div class = "col-md-8"><?=$item_details['date_available'] ?></div>
                 </div>
+                <!-- TODO: Add location display -->
                 <div class = "row mt-5 mb-3">
                     <div class = "col-md-4">Pickup Location:</div>
                     <div class = "col-md-8">WIP</div>
