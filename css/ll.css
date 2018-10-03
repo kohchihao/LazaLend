@@ -12,3 +12,35 @@
 .header {
   background-color: white;
 }
+.input-group-append {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+
+.btn-outline-secondary {
+  border: 1px solid #ced4da;
+}
+.searchbar-input-addon {
+  position: relative;
+
+}
+.searchbar-select-icon {
+  z-index: 100;
+  right: 1em;
+  top: 14px;
+  font-size: 12px;
+  position: absolute;
+}
+#dropdown, #dropdown:focus {
+  border-radius: 3px 0 0 3px;
+  -webkit-appearance: none;
+  transition: none;
+  box-shadow: none;
+  padding-right: 1.5rem;
+}
+
+#searchbar:hover, #searchbar:focus {
+  border-color:#2196F3;
+  transition: none;
+  box-shadow: none;
+}

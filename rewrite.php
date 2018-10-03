@@ -11,5 +11,9 @@
         require $root."logout.php";
     } elseif ($just_url[0] == "/LazaLend/categories") {
         require $root."categories.php";
-    } 
+    } elseif ($just_url[0] == "/LazaLend/logout") {
+        require $root."logout.php";
+    } elseif ($just_url[0] == "/LazaLend/search") {
+        require $root."search.php";
+    }
 ?>
