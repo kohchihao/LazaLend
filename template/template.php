@@ -172,7 +172,8 @@ function getItemsBasedOnCategory($category_id) {
     c.image_url AS categories_image_url,
     u.username AS user_username,
     u.profile_image_url AS user_profile_image_url,
-    image.image_link
+    image.image_link,
+    image.cover AS cover_image
     FROM items item, item_images image, categories c, users u
     WHERE item.id = image.item_id 
     AND item.category_id = " . $category_id 
@@ -201,7 +202,11 @@ function getItemsBasedOnCategory($category_id) {
     $items[$fe_q['item_id']]['categories_image_url'] = $fe_q['categories_image_url'];
     $items[$fe_q['item_id']]['username'] = $fe_q['user_username'];
     $items[$fe_q['item_id']]['profile_image_url'] = $fe_q['user_profile_image_url'];
-    $items[$fe_q['item_id']]['images'][] = array('image_link' => $fe_q['image_link']);
+    if ($fe_q['cover_image'] == t) {
+      $items[$fe_q['item_id']]['cover_image'] = $fe_q['image_link'];
+    } else {
+      $items[$fe_q['item_id']]['images'][] = array('image_link' => $fe_q['image_link']);
+    }
   }
 
   return $items;
@@ -227,7 +232,8 @@ function getItemsBasedOnName($search) {
   c.image_url AS categories_image_url,
   u.username AS user_username,
   u.profile_image_url AS user_profile_image_url,
-  image.image_link
+  image.image_link,
+  image.cover AS cover_image
   FROM items item, item_images image, categories c, users u
   WHERE item.id = image.item_id 
   AND item.category_id = c.id
@@ -257,7 +263,11 @@ function getItemsBasedOnName($search) {
     $items[$fe_q['item_id']]['categories_image_url'] = $fe_q['categories_image_url'];
     $items[$fe_q['item_id']]['username'] = $fe_q['user_username'];
     $items[$fe_q['item_id']]['profile_image_url'] = $fe_q['user_profile_image_url'];
-    $items[$fe_q['item_id']]['images'][] = array('image_link' => $fe_q['image_link']);
+    if ($fe_q['cover_image'] == t) {
+      $items[$fe_q['item_id']]['cover_image'] = $fe_q['image_link'];
+    } else {
+      $items[$fe_q['item_id']]['images'][] = array('image_link' => $fe_q['image_link']);
+    }
   }
 
   return $items;
