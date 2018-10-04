@@ -81,7 +81,7 @@ function getAllItemsChronological() {
   WHERE item.id = image.item_id 
   AND item.category_id = c.id
   AND item.user_id = u.id
-  ORDER BY item.last_updated DESC";
+  ORDER BY item.id DESC";
   
   $go_q = pg_query($query);
   $items = array();
@@ -118,18 +118,31 @@ function getAllItemsChronological() {
 
 function updateItemPromotedStatus($item_id, $promoted) {
   $query = "
-    UPDATE items
-    SET promoted = " . $promoted
-    . " WHERE id = " . $item_id;
+  UPDATE items
+  SET promoted = " . $promoted
+  . " WHERE id = " . $item_id;
 
   $go_q = pg_equery($query);
   pg_fetch_assoc($go_q);
   if (pg_affected_rows($go_q) == 1 ) {
-
+    return true;
   } else {
-    
+    return false;
   }
+}
 
+//delete item based on item.
+function deleteItem($item_id) {
+  $query = "
+  DELETE FROM items 
+  WHERE id = " . $item_id;
+
+  $go_q = pg_query($query);
+  if (pg_affected_rows($go_q) == 1 ) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 //utility - Wrap value inside a ' ' 

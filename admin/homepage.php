@@ -25,8 +25,16 @@ $_M = array(
   ),
 );
 
-$items = getAllItemsChronological();
 
+
+if (isset($_POST['delete'])) {
+  
+  $item_id = $_POST['delete'];
+  $done = deleteItem($item_id);
+
+}
+
+$items = getAllItemsChronological();
 require $adminRoot . "template/01-head.php";
 ?>
 
@@ -38,6 +46,7 @@ require $adminRoot . "template/01-head.php";
       <th scope="col">Description</th>
       <th scope="col">Promoted</th>
       <th scope="col" class="text-center">User</th>
+      <th scope="col" class="text-center">Operations</th>
 
     </tr>
   </thead>
@@ -59,7 +68,15 @@ require $adminRoot . "template/01-head.php";
             <img class="user-header-profile" src="<?='/../LazaLend'.$item['profile_image_url']?>" >
             <span><?=$item['username']?></span>
           </div>
-          
+        </td>
+
+        <td>
+          <div class="d-flex flex-row">
+            <a class="btn btn-primary m-1" href="#" role="button">Modify</a>
+            <form method="POST">
+              <button type="submit" class="btn btn-danger m-1" name="delete" value="<?=$item_id?>" >Delete</button>
+            </form>
+          </div>
         </td>
       </tr>
     <?php }?>
