@@ -146,7 +146,7 @@
     }
 
     function get_date_ago($date) {
-        $string_diff = "";
+        $string_diff = "Joined ";
         $TIMEZONE = "Asia/Singapore";
         date_default_timezone_set($TIMEZONE);
         $today = date("Y-m-d");
