@@ -22,5 +22,7 @@
 
     if($just_url[0] == "/admin") {
         require $adminRoot."index.php";
+    } elseif  ($just_url[0] == "/LazaLend/admin/homepage") {
+        require $adminRoot."homepage.php";
     }
 ?>
