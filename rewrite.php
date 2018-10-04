@@ -6,8 +6,8 @@
 
     if($just_url[0] == "/") {
         require $root."index.php";
-    } elseif ($just_url[0] == "/LazaLend/item-listing") {
-        require $root."item-listing.php";
+    } elseif ($just_url[0] == "/LazaLend/view-listing") {
+        require $root."view-listing.php";
     } elseif ($just_url[0] == "/LazaLend/logout") {
         require $root."logout.php";
     } elseif ($just_url[0] == "/LazaLend/categories") {
