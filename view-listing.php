@@ -105,7 +105,7 @@ require $root."template/01-head.php";
                         <?php if (isset($_SESSION['loggedInUserId']) && $_SESSION['loggedInUserId'] == $item_details['user_id']) {?>
                             <a href="item-dashboard.php?id=<?=$item_id?>" class = "btn blue-btn">Edit Listing</a>
                         <?php } else { ?>
-                            <a href = "bid?id=<?=$item_id?>" class = "btn blue-btn">Make Offer</a>
+                            <a href = "bid?id=<?=$item_id?>" class = "btn blue-btn <?=isNotLoggedIn()?>">Make Offer</a>
                         <?php } ?>
                     </div>
 
@@ -148,7 +148,7 @@ require $root."template/01-head.php";
                     </div>
                 </section>
 
-                <?php if (isset($_SESSION['loggedInUserId']) && $_SESSION['loggedInUserId'] != $item_details['user_id']) {?>
+                <?php if (!isset($_SESSION['loggedInUserId']) || isset($_SESSION['loggedInUserId']) && $_SESSION['loggedInUserId'] != $item_details['user_id']) {?>
                     <section class = "mt-4 detail-container">
                         <h4 class = "owner-header">Meet the Owner</h4>
 
