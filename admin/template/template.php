@@ -114,6 +114,21 @@ function getAllItemsChronological() {
   }
   
   return $items;
+}
+
+function updateItemPromotedStatus($item_id, $promoted) {
+  $query = "
+    UPDATE items
+    SET promoted = " . $promoted
+    . " WHERE id = " . $item_id;
+
+  $go_q = pg_equery($query);
+  pg_fetch_assoc($go_q);
+  if (pg_affected_rows($go_q) == 1 ) {
+
+  } else {
+    
+  }
 
 }
 
