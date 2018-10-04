@@ -692,7 +692,7 @@ function getAllItemsSortFeeAsc() {
   return $items;
 }
 
-function getAllItemsSortFeeAsc() {
+function getAllItemsSortFeeDesc() {
   $query = "SELECT 
   item.id AS item_id,
   item.name AS item_name,
