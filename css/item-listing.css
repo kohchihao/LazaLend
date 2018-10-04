@@ -1,3 +1,7 @@
+body {
+    background-color: #f2f2f2;
+}
+
 .carousel {
     height: 600px;
     width: 400px;
@@ -7,6 +11,12 @@
 .carousel-inner {
     height: 550px;
     background-color: #FFFFFF;
+}
+
+.carousel-item img {
+    object-fit: cover;
+    width: 400px;
+    height: 550px;
 }
 
 .carousel-control-next {
@@ -25,3 +35,75 @@
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23444' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
 }
 
+.blue-btn {
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    background-color: #33a0e8;
+    border-radius: 0;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.del-btn-container {
+    width: 400px;
+}
+
+.delete-btn {
+    width: 100%;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.detail-container {
+    background-color: #fff;
+    padding: 1.5rem;
+    margin: 1.6rem 0;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.05);
+}
+
+.item-action {
+    margin-left: -1.5rem;
+    width: calc(100% + 3.05rem);
+}
+
+.description-label {
+    color: #a8acb4;
+}
+
+.user-info {
+    display: flex;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-bottom: 25px;
+}
+
+.owner-header {
+    color: #8f939c
+}
+
+.user-info img { 
+    height: 70px;
+    width: auto;
+    border-radius: 100%;
+    margin-right: 12px;
+}
+
+.user-info-details {
+    display: inline-block;
+}
+
+.user-info-details .username {
+    color: #33a0e8;
+}
+
+.user-info-details .user-joined {
+    font-weight: 100;
+    padding-right: 10px;
+    margin: 0;
+    color: #8f939c
+}
