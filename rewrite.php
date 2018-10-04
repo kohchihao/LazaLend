@@ -1,5 +1,6 @@
 <?php
     $root = __DIR__."/";
+    $adminRoot = __DIR__."/admin/";
 
     $just_url = explode("?", $_SERVER['REQUEST_URI']);
 
@@ -17,5 +18,9 @@
         require $root."search.php";
     } elseif  ($just_url[0] == "/LazaLend/loan-item") {
         require $root."listing.php";
+    }
+
+    if($just_url[0] == "/admin") {
+        require $adminRoot."index.php";
     }
 ?>
