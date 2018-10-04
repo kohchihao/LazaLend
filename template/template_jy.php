@@ -1,4 +1,10 @@
 <?php 
+    function isNotLoggedIn() {
+        if (!isset($_SESSION['loggedInUserId'])) {
+            echo 'disabled';
+        } 
+    }
+    
     function no_image_selected($image_id) {      
         $html = '<div id = "image_'.$image_id.'">
                     <label for="loan_images_'.$image_id.'" class="loan-thumb">
@@ -52,9 +58,6 @@
     }
 
     function getItem($item_id) {
-        // TODO: Remove the require
-        require_once "template.php";
-
         $pickup_address = "";
         $return_address = "";
         $base_url = "https://" . MAPS_HOST . "/maps/api/geocode/json?key=" . GMAPS_API_KEY;
@@ -95,7 +98,7 @@
             $item['name'] = $fe_q['name'];
             $item['username'] = $fe_q['username'];
             $item['user_profile_image'] = $fe_q['profile_image_url'];
-            $item['user_joined'] = get_time_ago($fe_q['user_created']);
+            $item['user_joined'] = get_date_ago($fe_q['user_created']);
             $item['description'] = $fe_q['description'];
             $item['fee'] = $fe_q['fee'];
             $item['date_available'] = $fe_q['date_available'];
@@ -140,5 +143,36 @@
         }
 
         return $address;
+    }
+
+    function get_date_ago($date) {
+        $string_diff = "";
+        $TIMEZONE = "Asia/Singapore";
+        date_default_timezone_set($TIMEZONE);
+        $today = date("Y-m-d");
+        $today = new DateTime($today);
+        $date = new DateTime($date);
+        
+        $diff = $today->diff($date);
+        
+        if ($diff->y != 0) {
+            $string_diff = $diff->y . " years ";
+        }
+
+        if ($diff->m != 0) {
+            $string_diff .= $diff->m . " months ";
+        }
+
+        if ($diff->d != 0) {
+            $string_diff .= $diff->d . " days ";
+        }
+
+        if (empty($string_diff)) {
+            $string_diff = "Just now"; 
+        } else {
+            $string_diff .= "ago";
+        }
+
+        return $string_diff;
     }
 ?>
