@@ -112,15 +112,15 @@
                         
                         $go_ii = pg_query($insert_ii);
                     } else {
-                        $errors['upload_img'] = 'Oops something went wrong when uploading image. Please try again!';
+                        $errors['upload_img'] = 'Oops! Something went wrong when uploading your image';
                     }
                 }
            } else {
-               $errors['insert_loan'] = "Something went wrong while creating loan. Please try again.";
+               $errors['insert_loan'] = 'Oops! Something went wrong when creating your loan';
            }
         } else {
             if($_POST['item_fee'] >= 1000000) {
-                $errors['fee'] = "Item Fee can be more than $999,999";
+                $errors['fee'] = "Oops! Item Fee cannot be more than $999,999.";
             }
         }
 
