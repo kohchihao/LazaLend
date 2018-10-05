@@ -777,13 +777,19 @@ function getAllItemsSortFeeDesc() {
 
 //
 function getIndividualUserStats($userid) {
-  $query = "
-  SELECT i.user_id, COUNT(DISTINCT i.id), most_expensive(u.id), most_cheapest(u.id)
-  FROM items i, item_images image, users u
-  WHERE i.id = image.item_id
-  AND i.user_id = u.id
-  AND u.id =" . $userid 
-  ."GROUP BY i.user_id, most_expensive(u.id), most_cheapest(u.id)";
+  $query = "SELECT 
+  u.id AS user_id,
+  us.count AS total_items,
+  us.most_expensive AS most_expensive,
+  us.most_cheapest AS most_cheapest,
+  u.username AS username,
+  u.first_name AS first_name,
+  u.last_name AS last_name,
+  u.email AS email,
+  u.profile_image_url AS profile_image_url
+  FROM USER_STATS us, users u 
+  WHERE us.user_id = u.id
+  AND u.id =" . $userid;
 
   $go_q = pg_query($query);
   $userStats = pg_fetch_assoc($go_q);
