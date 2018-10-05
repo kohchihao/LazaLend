@@ -1,4 +1,4 @@
-<?php 
+<?php
     $root = __DIR__."/";
     require_once $root."cfg.php";
     require_once $root."template/template_jy.php";
@@ -7,15 +7,18 @@
 
     if(!$_SESSION['loggedInUserId'] || !isset($_GET['id'])) {
         header('Location: /LazaLend');
-    } 
+    }
 
     $user_id = $_SESSION['loggedInUserId'];
     $errors = Array();
 
     $item_id = $_GET['id'];
+    $item_details = getItem($item_id);
+    /*
     $q_i = 'SELECT user_id, category_id, fee, name, description, pickup_lat, pickup_long, return_lat, return_long, date_available, borrowed FROM items WHERE id = '.$item_id;
     $go_qi = pg_query($q_i);
     $item_details = pg_fetch_assoc($go_qi);
+    */
     if($item_details['user_id'] != $user_id) {
         header('Location: /LazaLend');
     }
@@ -45,7 +48,7 @@
         if(isEmptyField($_POST['item_fee'])) {
             $errors['location'] = "Oops! Item fee cannot be empty";
         }
-        
+
         if(sizeof($errors) == 0) {
             $request_pickup_url = $base_url . "&address=" . urlencode($_POST['item_pickup']);
         }
@@ -96,9 +99,9 @@
                 $target_files[] = $target_file;
                 $files_tmp_names[] = $_FILES["loan_images"]["tmp_name"][$count];
                 $valid_image = isValidImage($target_file);
-                
+
                 if(!$valid_image) {
-                    $errors['images'] = 'Oops! One of the image is an invalid image';    
+                    $errors['images'] = 'Oops! One of the image is an invalid image';
                 }
             }
             $count++;
@@ -110,36 +113,21 @@
         }
 
         if(sizeof($errors) == 0 && $_POST['item_fee'] < 1000000) {
-            $update = "UPDATE items SET
-                user_id = ".$user_id.", category_id = ".pg_escape_string($_POST['select_category']).", fee = ".pg_escape_string($_POST['item_fee']).", name = '".pg_escape_string($_POST['item_name'])."', description = '".pg_escape_string($_POST['item_description'])."', pickup_lat = '".$pickup_lat."', pickup_long = '".$pickup_long."', return_lat = '".$return_lat."', return_long = '".$return_long."', date_available = '".pg_escape_string($_POST['item_available'])."')
-                WHERE id = ;
-                ";
-           
-           $go_i = pg_query($insert);
+            $update = "UPDATE items SET ".
+                "category_id = ".pg_escape_string($_POST['select_category']).
+                ", fee = ".pg_escape_string($_POST['item_fee']).
+                ", name = '".pg_escape_string($_POST['item_name']).
+                "', description = '".pg_escape_string($_POST['item_description']).
+                "', pickup_lat = '".$pickup_lat.
+                "', pickup_long = '".$pickup_long.
+                "', return_lat = '".$return_lat.
+                "', return_long = '".$return_long.
+                "', date_available = '".pg_escape_string($_POST['item_available']).
+                "' WHERE id = ".$item_id.";";
 
-           $item_id = pg_fetch_row($go_i)[0];
-
-           if($item_id >= 0) {
-                // Upload Image
-                for($i = 0; $i < sizeof($target_files); $i++) {
-                    $is_cover = 'FALSE';
-                    if (move_uploaded_file($files_tmp_names[$i], $target_files[$i])) {
-                        // Insert into item_images
-                        if($i == 0) $is_cover = 'TRUE';  
-                        $insert_ii = "INSERT INTO item_images (item_id, image_link, cover) VALUES (".$item_id.", '/".$target_files[$i]."', ".$is_cover.")";
-                        
-                        $go_ii = pg_query($insert_ii);
-                    } else {
-                        $errors['upload_img'] = 'Oops something went wrong when uploading image. Please try again!';
-                    }
-                }
-           } else {
-               $errors['insert_loan'] = "Something went wrong while creating loan. Please try again.";
-           }
-        } else {
-            if($_POST['item_fee'] >= 1000000) {
-                $errors['fee'] = "Item Fee can be more than $999,999";
-            }
+           $go_u = pg_query($update);
+        } else if($_POST['item_fee'] >= 1000000) {
+            $errors['fee'] = "Item Fee cannot be more than $999,999";
         }
 
         if(sizeof($errors) == 0) {
@@ -200,7 +188,7 @@
 
         <div class = "btn-container">
             <button type = "button" class = "btn" id = "go-to-category-btn" onclick = "go_to_loan_category()" disabled>Next: Choose a category</button>
-        </div>    
+        </div>
     </section>
 
     <!-- Categories -->
@@ -224,7 +212,7 @@
             </ul>
         </div>
     </section>
-    
+
     <!-- Item Details -->
     <section class = "loan-item hidden" id = "loan-details">
         <div class = "loan-navigation">
@@ -303,7 +291,7 @@
                     If return location is not specified, return location will be same as pickup location.
                 </div>
             </fieldset>
-                
+
             <fieldset>
                 <div class = "fs-description">
                     <div>Description</div>
@@ -325,14 +313,14 @@
     </section>
 </form>
 
-<?php  
+<?php
     require $root."template/footer.php";
 
-    if (sizeof($errors)) { 
+    if (sizeof($errors)) {
         foreach($errors as $error) {
 ?>
             <script>show_error('<?=$error?>');</script>
 <?php
-        }        
-    } 
+        }
+    }
 ?>
