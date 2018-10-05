@@ -76,31 +76,32 @@ require $adminRoot . "template/01-head.php";
 ?>
 
 <div id="filter" class="container">
-  <form method="POST" class= "flex-grow-1 col-md-5">
-      <div class="input-group ">
-          <div class="input-group-prepend">
-              <span class="searchbar-input-addon">
-                  <i class="fa fa-caret-down searchbar-select-icon"></i>
-                  <select id="dropdown" class="form-control" data-live-search="true" name="choice" >
-                      <option value="sortIdAsc">Sort by ID(ASC)</option>
-                      <option value="sortIdDesc">Sort by ID(DESC)</option>
-                      <option value="sortUsernameAsc">Sort by Username(ASC)</option>
-                      <option value="sortUsernameDesc">Sort by Username(DESC)</option>
-                      <option value="sortDateAvailableAsc">Sort by Date Available(ASC)</option>
-                      <option value="sortDateAvailableDesc">Sort by Date Available(DESC)</option>
-                      <option value="sortPromotedAsc">Sort by Promoted(ASC)</option>
-                      <option value="sortPromotedDesc">Sort by Promoted(DESC)</option>
-                      <option value="sortFeeAsc">Sort by Fee/day(ASC)</option>
-                      <option value="sortFeeDesc">Sort by Fee/day(DESC)</option>
-                  </select>
-              </span>
-          </div>
+    <h4>Filter</h4>
+    <form method="POST" class= "flex-grow-1 col-md-5">
+        <div class="input-group ">
+            <div class="input-group-prepend">
+                <span class="searchbar-input-addon">
+                    <i class="fa fa-caret-down searchbar-select-icon"></i>
+                    <select id="dropdown" class="form-control" data-live-search="true" name="choice" >
+                        <option value="sortIdAsc">Sort by ID(ASC)</option>
+                        <option value="sortIdDesc">Sort by ID(DESC)</option>
+                        <option value="sortUsernameAsc">Sort by Username(ASC)</option>
+                        <option value="sortUsernameDesc">Sort by Username(DESC)</option>
+                        <option value="sortDateAvailableAsc">Sort by Date Available(ASC)</option>
+                        <option value="sortDateAvailableDesc">Sort by Date Available(DESC)</option>
+                        <option value="sortPromotedAsc">Sort by Promoted(ASC)</option>
+                        <option value="sortPromotedDesc">Sort by Promoted(DESC)</option>
+                        <option value="sortFeeAsc">Sort by Fee/day(ASC)</option>
+                        <option value="sortFeeDesc">Sort by Fee/day(DESC)</option>
+                    </select>
+                </span>
+            </div>
 
-          <div class="input-group-append bg-primary">
-              <button class="btn btn-outline-secondary text-white" name="sort" type="submit"><i class="fas fa-search"></i></button>
-          </div>
-      </div>
-  </form>
+            <div class="input-group-append bg-primary">
+                <button class="btn btn-outline-secondary text-white" name="sort" type="submit"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </form>
 </div>
 
 
@@ -132,10 +133,13 @@ require $adminRoot . "template/01-head.php";
         <?php }?>
 
         <td>
-          <div class="d-flex flex-column justify-content-center align-items-center">
-            <img class="user-header-profile" src="<?='/../LazaLend' . $item['profile_image_url']?>" >
-            <span><?=$item['username']?></span>
-          </div>
+            <a href="individual-user?userid=<?=$item['user_id']?>">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <img class="user-header-profile" src="<?='/../LazaLend' . $item['profile_image_url']?>" >
+                    <span><?=$item['username']?></span>
+                </div>
+            </a>
+            
         </td>
 
         <td>

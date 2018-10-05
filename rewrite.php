@@ -24,5 +24,7 @@
         require $adminRoot."index.php";
     } elseif  ($just_url[0] == "/LazaLend/admin/homepage") {
         require $adminRoot."homepage.php";
+    } elseif  ($just_url[0] == "/LazaLend/admin/individual-user") {
+        require $adminRoot."individual-user.php";
     }
 ?>
