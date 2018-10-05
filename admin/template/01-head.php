@@ -49,7 +49,7 @@
                     <ul class="nav-pills navbar-nav ml-auto flex-nowrap">
                         
                         <li class="nav-item">
-                            <a href="#" class="nav-link m-2 menu-item active text-light">Categories</a>
+                            <a href="categories" class="nav-link m-2 menu-item active text-light">Categories</a>
                         </li>
 
                         <li class="nav-item">

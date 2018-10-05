@@ -820,6 +820,47 @@ function getAllUserStats() {
   return $users;
 }
 
+function getAllCategories() {
+  $query = "SELECT *
+  FROM categories";
+
+  $go_q = pg_query($query);
+  $categories = array();
+
+  while ($fe_q = pg_fetch_assoc($go_q)) {
+    $categories[] = $fe_q;
+  }
+  return $categories;
+}
+
+function insertCategory($name, $image_url) {
+  $query = "INSERT INTO 
+  categories(name,image_url)
+  VALUES ("
+  . string($name) . ","
+  . string($image_url) . ")";
+
+  $go_q = pg_query($query);
+  if (pg_affected_rows($go_q) > 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function deleteCategory($category_id) {
+  $query = "
+  DELETE FROM categories 
+  WHERE id = " . $category_id;
+
+  $go_q = pg_query($query);
+  if (pg_affected_rows($go_q) == 1 ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 
 //utility - Wrap value inside a ' ' 
 function string($value) {
