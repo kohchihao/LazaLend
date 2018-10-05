@@ -75,6 +75,7 @@ function getAllItems() {
   c.image_url AS categories_image_url,
   u.username AS user_username,
   u.profile_image_url AS user_profile_image_url,
+  u.id AS user_id,
   image.image_link,
   image.cover AS cover_image
   FROM items item, item_images image, categories c, users u
@@ -104,6 +105,7 @@ function getAllItems() {
     $items[$fe_q['item_id']]['categories_image_url'] = $fe_q['categories_image_url'];
     $items[$fe_q['item_id']]['username'] = $fe_q['user_username'];
     $items[$fe_q['item_id']]['profile_image_url'] = $fe_q['user_profile_image_url'];
+    $items[$fe_q['item_id']]['user_id'] = $fe_q['user_id'];
     
     if ($fe_q['cover_image'] == t) {
       $items[$fe_q['item_id']]['cover_image'] = $fe_q['image_link'];
@@ -165,6 +167,7 @@ function getAllItemsSortIdAsc() {
   c.image_url AS categories_image_url,
   u.username AS user_username,
   u.profile_image_url AS user_profile_image_url,
+  u.id AS user_id,
   image.image_link,
   image.cover AS cover_image
   FROM items item, item_images image, categories c, users u
@@ -194,6 +197,7 @@ function getAllItemsSortIdAsc() {
     $items[$fe_q['item_id']]['categories_image_url'] = $fe_q['categories_image_url'];
     $items[$fe_q['item_id']]['username'] = $fe_q['user_username'];
     $items[$fe_q['item_id']]['profile_image_url'] = $fe_q['user_profile_image_url'];
+    $items[$fe_q['item_id']]['user_id'] = $fe_q['user_id'];
     
     if ($fe_q['cover_image'] == t) {
       $items[$fe_q['item_id']]['cover_image'] = $fe_q['image_link'];
@@ -226,6 +230,7 @@ function getAllItemsSortIdDesc() {
   c.image_url AS categories_image_url,
   u.username AS user_username,
   u.profile_image_url AS user_profile_image_url,
+  u.id AS user_id,
   image.image_link,
   image.cover AS cover_image
   FROM items item, item_images image, categories c, users u
@@ -255,7 +260,8 @@ function getAllItemsSortIdDesc() {
     $items[$fe_q['item_id']]['categories_image_url'] = $fe_q['categories_image_url'];
     $items[$fe_q['item_id']]['username'] = $fe_q['user_username'];
     $items[$fe_q['item_id']]['profile_image_url'] = $fe_q['user_profile_image_url'];
-    
+    $items[$fe_q['item_id']]['user_id'] = $fe_q['user_id'];
+
     if ($fe_q['cover_image'] == t) {
       $items[$fe_q['item_id']]['cover_image'] = $fe_q['image_link'];
     } else {
@@ -287,6 +293,7 @@ function getAllItemsSortUsernameAsc() {
   c.image_url AS categories_image_url,
   u.username AS user_username,
   u.profile_image_url AS user_profile_image_url,
+  u.id AS user_id,
   image.image_link,
   image.cover AS cover_image
   FROM items item, item_images image, categories c, users u
@@ -316,7 +323,8 @@ function getAllItemsSortUsernameAsc() {
     $items[$fe_q['item_id']]['categories_image_url'] = $fe_q['categories_image_url'];
     $items[$fe_q['item_id']]['username'] = $fe_q['user_username'];
     $items[$fe_q['item_id']]['profile_image_url'] = $fe_q['user_profile_image_url'];
-    
+    $items[$fe_q['item_id']]['user_id'] = $fe_q['user_id'];
+
     if ($fe_q['cover_image'] == t) {
       $items[$fe_q['item_id']]['cover_image'] = $fe_q['image_link'];
     } else {
@@ -347,6 +355,7 @@ function getAllItemsSortUsernameDesc() {
   c.image_url AS categories_image_url,
   u.username AS user_username,
   u.profile_image_url AS user_profile_image_url,
+  u.id AS user_id,
   image.image_link,
   image.cover AS cover_image
   FROM items item, item_images image, categories c, users u
@@ -376,7 +385,8 @@ function getAllItemsSortUsernameDesc() {
     $items[$fe_q['item_id']]['categories_image_url'] = $fe_q['categories_image_url'];
     $items[$fe_q['item_id']]['username'] = $fe_q['user_username'];
     $items[$fe_q['item_id']]['profile_image_url'] = $fe_q['user_profile_image_url'];
-    
+    $items[$fe_q['item_id']]['user_id'] = $fe_q['user_id'];
+
     if ($fe_q['cover_image'] == t) {
       $items[$fe_q['item_id']]['cover_image'] = $fe_q['image_link'];
     } else {
@@ -408,6 +418,7 @@ function getAllItemsSortDateAvailableAsc() {
   c.image_url AS categories_image_url,
   u.username AS user_username,
   u.profile_image_url AS user_profile_image_url,
+  u.id AS user_id,
   image.image_link,
   image.cover AS cover_image
   FROM items item, item_images image, categories c, users u
@@ -437,7 +448,8 @@ function getAllItemsSortDateAvailableAsc() {
     $items[$fe_q['item_id']]['categories_image_url'] = $fe_q['categories_image_url'];
     $items[$fe_q['item_id']]['username'] = $fe_q['user_username'];
     $items[$fe_q['item_id']]['profile_image_url'] = $fe_q['user_profile_image_url'];
-    
+    $items[$fe_q['item_id']]['user_id'] = $fe_q['user_id'];
+
     if ($fe_q['cover_image'] == t) {
       $items[$fe_q['item_id']]['cover_image'] = $fe_q['image_link'];
     } else {
@@ -468,6 +480,7 @@ function getAllItemsSortDateAvailableDesc() {
   c.image_url AS categories_image_url,
   u.username AS user_username,
   u.profile_image_url AS user_profile_image_url,
+  u.id AS user_id,
   image.image_link,
   image.cover AS cover_image
   FROM items item, item_images image, categories c, users u
@@ -497,7 +510,8 @@ function getAllItemsSortDateAvailableDesc() {
     $items[$fe_q['item_id']]['categories_image_url'] = $fe_q['categories_image_url'];
     $items[$fe_q['item_id']]['username'] = $fe_q['user_username'];
     $items[$fe_q['item_id']]['profile_image_url'] = $fe_q['user_profile_image_url'];
-    
+    $items[$fe_q['item_id']]['user_id'] = $fe_q['user_id'];
+
     if ($fe_q['cover_image'] == t) {
       $items[$fe_q['item_id']]['cover_image'] = $fe_q['image_link'];
     } else {
@@ -528,6 +542,7 @@ function getAllItemsSortPromotedAsc() {
   c.image_url AS categories_image_url,
   u.username AS user_username,
   u.profile_image_url AS user_profile_image_url,
+  u.id AS user_id,
   image.image_link,
   image.cover AS cover_image
   FROM items item, item_images image, categories c, users u
@@ -558,7 +573,8 @@ function getAllItemsSortPromotedAsc() {
     $items[$fe_q['item_id']]['categories_image_url'] = $fe_q['categories_image_url'];
     $items[$fe_q['item_id']]['username'] = $fe_q['user_username'];
     $items[$fe_q['item_id']]['profile_image_url'] = $fe_q['user_profile_image_url'];
-    
+    $items[$fe_q['item_id']]['user_id'] = $fe_q['user_id'];
+
     if ($fe_q['cover_image'] == t) {
       $items[$fe_q['item_id']]['cover_image'] = $fe_q['image_link'];
     } else {
@@ -589,6 +605,7 @@ function getAllItemsSortPromotedDesc() {
   c.image_url AS categories_image_url,
   u.username AS user_username,
   u.profile_image_url AS user_profile_image_url,
+  u.id AS user_id,
   image.image_link,
   image.cover AS cover_image
   FROM items item, item_images image, categories c, users u
@@ -619,6 +636,7 @@ function getAllItemsSortPromotedDesc() {
     $items[$fe_q['item_id']]['categories_image_url'] = $fe_q['categories_image_url'];
     $items[$fe_q['item_id']]['username'] = $fe_q['user_username'];
     $items[$fe_q['item_id']]['profile_image_url'] = $fe_q['user_profile_image_url'];
+    $items[$fe_q['item_id']]['user_id'] = $fe_q['user_id'];
     
     if ($fe_q['cover_image'] == t) {
       $items[$fe_q['item_id']]['cover_image'] = $fe_q['image_link'];
@@ -651,6 +669,7 @@ function getAllItemsSortFeeAsc() {
   c.image_url AS categories_image_url,
   u.username AS user_username,
   u.profile_image_url AS user_profile_image_url,
+  u.id AS user_id,
   image.image_link,
   image.cover AS cover_image
   FROM items item, item_images image, categories c, users u
@@ -680,6 +699,7 @@ function getAllItemsSortFeeAsc() {
     $items[$fe_q['item_id']]['categories_image_url'] = $fe_q['categories_image_url'];
     $items[$fe_q['item_id']]['username'] = $fe_q['user_username'];
     $items[$fe_q['item_id']]['profile_image_url'] = $fe_q['user_profile_image_url'];
+    $items[$fe_q['item_id']]['user_id'] = $fe_q['user_id'];
     
     if ($fe_q['cover_image'] == t) {
       $items[$fe_q['item_id']]['cover_image'] = $fe_q['image_link'];
@@ -711,6 +731,7 @@ function getAllItemsSortFeeDesc() {
   c.image_url AS categories_image_url,
   u.username AS user_username,
   u.profile_image_url AS user_profile_image_url,
+  u.id AS user_id,
   image.image_link,
   image.cover AS cover_image
   FROM items item, item_images image, categories c, users u
@@ -740,7 +761,8 @@ function getAllItemsSortFeeDesc() {
     $items[$fe_q['item_id']]['categories_image_url'] = $fe_q['categories_image_url'];
     $items[$fe_q['item_id']]['username'] = $fe_q['user_username'];
     $items[$fe_q['item_id']]['profile_image_url'] = $fe_q['user_profile_image_url'];
-    
+    $items[$fe_q['item_id']]['user_id'] = $fe_q['user_id'];
+
     if ($fe_q['cover_image'] == t) {
       $items[$fe_q['item_id']]['cover_image'] = $fe_q['image_link'];
     } else {
@@ -750,6 +772,22 @@ function getAllItemsSortFeeDesc() {
   }
   
   return $items;
+}
+
+
+//
+function getIndividualUserStats($userid) {
+  $query = "
+  SELECT i.user_id, COUNT(DISTINCT i.id), most_expensive(u.id), most_cheapest(u.id)
+  FROM items i, item_images image, users u
+  WHERE i.id = image.item_id
+  AND i.user_id = u.id
+  AND u.id =" . $userid 
+  ."GROUP BY i.user_id, most_expensive(u.id), most_cheapest(u.id)";
+
+  $go_q = pg_query($query);
+  $userStats = pg_fetch_assoc($go_q);
+  return $userStats;
 }
 
 
