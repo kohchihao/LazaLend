@@ -775,7 +775,6 @@ function getAllItemsSortFeeDesc() {
 }
 
 
-//
 function getIndividualUserStats($userid) {
   $query = "SELECT 
   u.id AS user_id,
@@ -796,6 +795,30 @@ function getIndividualUserStats($userid) {
   return $userStats;
 }
 
+function getAllUserStats() {
+  $query = "SELECT 
+  u.id AS user_id,
+  us.count AS total_items,
+  us.most_expensive AS most_expensive,
+  us.most_cheapest AS most_cheapest,
+  u.username AS username,
+  u.first_name AS first_name,
+  u.last_name AS last_name,
+  u.email AS email,
+  u.profile_image_url AS profile_image_url
+  FROM USER_STATS us, users u 
+  WHERE us.user_id = u.id
+  ORDER BY u.id ASC";
+
+  $go_q = pg_query($query);
+  $users = array();
+
+  while ($fe_q = pg_fetch_assoc($go_q)) {
+    $users[] = $fe_q;
+  }
+
+  return $users;
+}
 
 
 //utility - Wrap value inside a ' ' 

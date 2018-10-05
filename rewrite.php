@@ -26,5 +26,7 @@
         require $adminRoot."homepage.php";
     } elseif  ($just_url[0] == "/LazaLend/admin/individual-user") {
         require $adminRoot."individual-user.php";
+    } elseif  ($just_url[0] == "/LazaLend/admin/all-user") {
+        require $adminRoot."all-user.php";
     }
 ?>

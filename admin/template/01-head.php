@@ -53,11 +53,11 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link m-2 menu-item active text-light">Add Items</a>
+                            <a href="#" class="nav-link m-2 menu-item active text-light">Items</a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link m-2 menu-item active text-light">Show user stats</a>
+                            <a href="all-user" class="nav-link m-2 menu-item active text-light">Show user stats</a>
                         </li>
                     </ul>
                 </div>
