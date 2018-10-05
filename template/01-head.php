@@ -34,12 +34,35 @@
                         <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="./">
                             LazaLend
                         </a>
+
                         <div class="w-100 text-right">
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                         </div>
+
+                        
                     </div>
+
+                    <form method="POST" action="search" class= "collapse navbar-collapse flex-grow-1 col-md-5">
+                        <div class="input-group ">
+                            <div class="input-group-prepend">
+                                <span class="searchbar-input-addon">
+                                    <i class="fa fa-caret-down searchbar-select-icon"></i>
+                                    <select id="dropdown" class="form-control" data-live-search="true" name="choice" >
+                                        <option value="items">Items</option>
+                                        <!-- <option value="categories">Categories</option> -->
+                                    </select>
+                                </span>
+                                
+                            </div>
+                            <input type="text" id="searchbar" name="search" class="form-control" aria-label="Text input with dropdown button" placeholder="Search for an item" >
+
+                            <div class="input-group-append bg-primary">
+                                <button class="btn btn-outline-secondary text-white" type="submit"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
 
                     <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
                         <ul class="nav-pills navbar-nav ml-auto flex-nowrap">
@@ -49,7 +72,7 @@
 
                                     <a href="#" class="nav-link m-2 menu-item dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user"></i></a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#"><?=$_SESSION['loggedInUserEmail']?></a>
                                         <a class="dropdown-item" href="#">Another action</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="logout">Logout</a>
