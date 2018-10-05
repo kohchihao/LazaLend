@@ -53,7 +53,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link m-2 menu-item active text-light">Items</a>
+                            <a href="loan-item" class="nav-link m-2 menu-item active text-light">Items</a>
                         </li>
 
                         <li class="nav-item">
