@@ -1,8 +1,5 @@
 function select_category(category_id, changed) {
     $('#select_category').attr('value', category_id);
-    if(changed) {
-        fieldChanged('item_category');
-    }
 
     $('#loan-categories').hide();
     $('#loan-details').show();
@@ -10,7 +7,7 @@ function select_category(category_id, changed) {
 
 function back_to_loan_category() {
     $('#loan-categories').show();
-    $('#loan-details').show();
+    $('#loan-details').hide();
 }
 
 function show_error(error_msg) {
@@ -25,5 +22,5 @@ function show_error(error_msg) {
 }
 
 function fieldChanged(field) {
-    document.getElementById(field + '_changed').value = true;
+    $("#" + field).attr('checked', true);
 }

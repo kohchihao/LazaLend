@@ -15,6 +15,86 @@
     $item_id = $_GET['id'];
     $item_details = getItem($item_id);
 
+    if($item_details['user_id'] != $user_id) {
+        header('Location: view-listing.php?id='.$item_id);
+    }
+
+    if(isset($_POST['edit-item-submit'])) {
+        $base_url = "https://" . MAPS_HOST . "/maps/api/geocode/json?key=" . GMAPS_API_KEY;
+        $request_pickup_url = json_encode(array('status' => 'ERROR'));
+        $request_return_url = json_encode(array('status' => 'ERROR'));
+
+        if(isEmptyField($_POST['item_name'])) {
+            $errors['name'] = "Oops! Item name cannot be empty";
+        }
+
+        if(isEmptyField($_POST['item_fee'])) {
+            $errors['location'] = "Oops! Item fee cannot be empty";
+        }
+
+        if(sizeof($errors) == 0) {
+            $request_pickup_url = $base_url . "&address=" . urlencode($_POST['item_pickup']);
+        }
+
+        if($_POST['item_pickup_changed']) {
+            $pickup_json = file_get_contents($request_pickup_url);
+            $pickup_obj = json_decode($pickup_json);
+
+            $pickup_status = $pickup_obj->status;
+            $pickup_lat = "";
+            $pickup_long = "";
+            $return_lat = "";
+            $return_long = "";
+
+            if ($pickup_status == "OK") {
+                $pickup_lat = $pickup_obj->results[0]->geometry->location->lat;
+                $pickup_long = $pickup_obj->results[0]->geometry->location->lng;
+                if ($_POST['item_return'] == "") {
+                    $return_lat = $pickup_lat;
+                    $return_long = $pickup_long;
+                }
+            } else {
+                $errors['location'] = "Oops! Invalid Pickup Location";
+            }
+        }
+
+        if($_POST['item_return'] != "" && $_POST['item_return_changed'] && sizeof($errors) == 0) {
+            $request_return_url = $base_url . "&address=" . urlencode($_POST['item_return']);
+            $return_json = file_get_contents($request_return_url);
+            $return_obj = json_decode($return_json);
+            $return_status = $return_obj->status;
+
+            if($return_status == "OK") {
+                $return_lat = $return_obj->results[0]->geometry->location->lat;
+                $return_long = $return_obj->results[0]->geometry->location->lng;
+            } else {
+                if(sizeof($errors)) {
+                    $errors['location'] = "Oops! Invalid Pickup & Return Location";
+                } else {
+                    $errors['location'] = "Oops! Invalid Return Location";
+                }
+            }
+        }
+
+        if(sizeof($errors) == 0 && $_POST['item_fee'] < 1000000) {
+            $update = "UPDATE items SET ".
+                "category_id = ".pg_escape_string($_POST['select_category']).
+                ", fee = ".pg_escape_string($_POST['item_fee']).
+                ", name = '".pg_escape_string($_POST['item_name']).
+                "', description = '".pg_escape_string($_POST['item_description']);
+            if($_POST['item_pickup_changed']) $update = $update . "', pickup_lat = '".$pickup_lat."', pickup_long = '".$pickup_long;
+            if($_POST['item_return_changed']) $update = $update .  "', return_lat = '".$return_lat."', return_long = '".$return_long;
+            $update = $update . "', date_available = '".pg_escape_string($_POST['item_available']).
+                "' WHERE id = ".$item_id.";";
+            $go_u = pg_query($update);
+        } else if($_POST['item_fee'] >= 1000000) {
+            $errors['fee'] = "Item Fee cannot be more than $999,999";
+        }
+
+        if(sizeof($errors) == 0) {
+            header("Location: view-listing.php?id=".$item_id);
+        }
+    }
     // Fetch address from lat/long
     $base_url = "https://" . MAPS_HOST . "/maps/api/geocode/json?location_type=ROOFTOP&result_type=street_address&key=" . GMAPS_API_KEY;
 
@@ -34,99 +114,6 @@
     $return_address = "";
     if($return_status == "OK") {
         $return_address = $return_obj->results[0]->formatted_address;
-    }
-
-    if($item_details['user_id'] != $user_id) {
-        header('Location: view-listing.php?id='.$item_id);
-    }
-
-    if(isset($_POST['edit-item-submit'])) {
-        $base_url = "https://" . MAPS_HOST . "/maps/api/geocode/json?key=" . GMAPS_API_KEY;
-        $file_target_dir = "storage/items/";
-        $target_files = Array();
-        $files_tmp_names = Array();
-        $request_pickup_url = json_encode(array('status' => 'ERROR'));
-        $request_return_url = json_encode(array('status' => 'ERROR'));
-
-        if(isEmptyField($_POST['item_name'])) {
-            $errors['name'] = "Oops! Item name cannot be empty";
-        }
-
-        if(isEmptyField($_POST['item_fee'])) {
-            $errors['location'] = "Oops! Item fee cannot be empty";
-        }
-
-        if(sizeof($errors) == 0) {
-            $request_pickup_url = $base_url . "&address=" . urlencode($_POST['item_pickup']);
-        }
-
-        $pickup_json = file_get_contents($request_pickup_url);
-        $pickup_obj = json_decode($pickup_json);
-
-        $pickup_status = $pickup_obj->status;
-        $pickup_lat = "";
-        $pickup_long = "";
-        $return_lat = "";
-        $return_long = "";
-
-        if($pickup_status == "OK") {
-            $pickup_lat = $pickup_obj->results[0]->geometry->location->lat;
-            $pickup_long = $pickup_obj->results[0]->geometry->location->lng;
-            if($_POST['item_return'] == "") {
-                $return_lat = $pickup_lat;
-                $return_long = $pickup_long;
-            }
-        } else {
-            $errors['location'] = "Oops! Invalid Pickup Location";
-        }
-
-        if($_POST['item_return'] != "" && sizeof($errors) == 0) {
-            $request_return_url = $base_url . "&address=" . urlencode($_POST['item_return']);
-            $return_json = file_get_contents($request_return_url);
-            $return_obj = json_decode($return_json);
-            $return_status = $return_obj->status;
-
-            if($return_status == "OK") {
-                $return_lat = $return_obj->results[0]->geometry->location->lat;
-                $return_long = $return_obj->results[0]->geometry->location->lng;
-            } else {
-                if(sizeof($errors)) {
-                    $errors['location'] = "Oops! Invalid Pickup & Return Location";
-                } else {
-                    $errors['location'] = "Oops! Invalid Return Location";
-                }
-            }
-        }
-
-        if(!$_POST['item_category_changed'] &&
-           !$_POST['item_fee_changed'] &&
-           !$_POST['item_name_changed'] &&
-           !$_POST['item_description_changed'] &&
-           !$_POST['item_pickup_changed'] &&
-           !$_POST['item_return_changed'] &&
-           !$_POST['item_available_changed']) {
-            $errors['nochange'] = 'No changes were made.';
-        }
-
-        if(sizeof($errors) == 0 && $_POST['item_fee'] < 1000000) {
-            $update = "UPDATE items SET ".
-                $_POST['item_category_changed']?("category_id = ".pg_escape_string($_POST['select_category'])):''.
-                $_POST['item_fee_changed']?(", fee = ".pg_escape_string($_POST['item_fee'])):''.
-                $_POST['item_name_changed']?(", name = '".pg_escape_string($_POST['item_name'])):''.
-                $_POST['item_description_changed']?("', description = '".pg_escape_string($_POST['item_description'])):''.
-                $_POST['item_pickup_changed']?("', pickup_lat = '".$pickup_lat."', pickup_long = '".$pickup_long):''.
-                $_POST['item_return_changed']?("', return_lat = '".$return_lat."', return_long = '".$return_long):''.
-                $_POST['item_available_changed']?("', date_available = '".pg_escape_string($_POST['item_available'])):''.
-                "' WHERE id = ".$item_id.";";
-
-           $go_u = pg_query($update);
-        } else if($_POST['item_fee'] >= 1000000) {
-            $errors['fee'] = "Item Fee cannot be more than $999,999";
-        }
-
-        if(sizeof($errors) == 0) {
-            header("Location: view-listing.php?id=".$item_id);
-        }
     }
 
     $categories = Array();
@@ -169,7 +156,6 @@
 
         <div class = "">
             <input type = "text" class = "hidden" name = "select_category" id = "select_category" value = "1">
-            <input type = "text" class = "hidden" name = "item_category_changed" id = "item_category_changed" value = false>
 
             <ul class = "categories">
                 <?php foreach($categories as $category) { ?>
@@ -201,7 +187,6 @@
                 <div class = "item-details required">
                     <div class = "itd-b">
                         <span class = "itd-c">
-                            <input type = "text" class = "hidden" name = "item_name_changed" id = "item_name_changed" value = false>
                             <input type = "text" name = "item_name" value = "<?=$item_details['name'] ?>" class = "items-input" oninput="fieldChanged('item_name')">
                         </span>
                     </div>
@@ -213,7 +198,6 @@
                 <div class = "item-details required">
                     <div class = "itd-b">
                         <span class = "itd-c">
-                            <input type = "text" class = "hidden" name = "item_fee_changed" id = "item_fee_changed" value = false>
                             <input type = "number" step = "0.01" name = "item_fee" value = "<?=$item_details['fee'] ?>" class = "items-input" oninput="fieldChanged('item_fee')">
                         </span>
                     </div>
@@ -228,7 +212,6 @@
                 <div class = "item-details">
                     <div class = "itd-b">
                         <span class = "itd-c">
-                            <input type = "text" class = "hidden" name = "item_available_changed" id = "item_available_changed" value = false>
                             <input type = "date" name = "item_available" value = "<?=$item_details['date_available'] ?>" class = "items-input" oninput="fieldChanged('item_available')">
                         </span>
                     </div>
@@ -243,8 +226,8 @@
                 <div class = "item-details required">
                     <div class = "itd-b">
                         <span class = "itd-c">
-                            <input type = "text" class = "hidden" name = "item_pickup_changed" id = "item_pickup_changed" value = false>
-                            <input type = "text" name = "item_pickup" value = "<?=$pickup_address?>" class = "items-input" oninput="fieldChanged('item_pickup')">
+                            <input type = "checkbox" class = "hidden" name = "item_pickup_changed" id = "item_pickup_changed" value = true>
+                            <input type = "text" name = "item_pickup" value = "<?=$pickup_address?>" class = "items-input" oninput="fieldChanged('item_pickup_changed')">
                         </span>
                     </div>
                 </div>
@@ -252,8 +235,8 @@
                  <div class = "item-details">
                     <div class = "itd-b">
                         <span class = "itd-c">
-                            <input type = "text" class = "hidden" name = "item_return_changed" id = "item_return_changed" value = false>
-                            <input type = "text" name = "item_return" value = "<?=$return_address?>" class = "items-input" oninput="fieldChanged('item_return')">
+                            <input type = "checkbox" class = "hidden" name = "item_return_changed" id = "item_return_changed" value = true>
+                            <input type = "text" name = "item_return" value = "<?=$return_address?>" class = "items-input" oninput="fieldChanged('item_return_changed')">
                         </span>
                     </div>
                 </div>
@@ -271,7 +254,6 @@
                 <div class = "item-details">
                     <div class = "itd-b">
                         <span class = "itd-c">
-                            <input type = "text" class = "hidden" name = "item_description_changed" id = "item_description_changed" value = false>
                             <textarea rows = "3" name = "item_description" class = "items-input" oninput="fieldChanged('item_description')"><?=$item_details['description']?></textarea>
                         </span>
                     </div>
