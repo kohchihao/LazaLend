@@ -237,7 +237,7 @@ function getItemsBasedOnUser($user_id) {
     
     WHERE item.id = image.item_id 
     AND item.user_id = " . $user_id ."
-    AND c.id = category
+    AND c.id = item.category_id
     ORDER BY item.created DESC";
 
     $go_q = pg_query($query);

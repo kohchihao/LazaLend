@@ -12,7 +12,6 @@ $user_id = $_SESSION['loggedInUserId'];
 $errors = Array();
 
 $items = getItemsBasedOnUser($user_id);
-
 $_M = array(
     'HEAD' => array(
         'TITLE' => 'View your Listings',
