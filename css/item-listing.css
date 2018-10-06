@@ -107,3 +107,27 @@ body {
     margin: 0;
     color: #8f939c
 }
+
+.bids-info-container {
+    justify-content: center;
+}
+
+.bids-info {
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 1rem 1rem;
+}
+
+.bidder-input-container{
+    padding: 0 1rem;
+}
+
+.btn-container {
+    text-align: right;
+}
+
+.submit-bid {
+    padding: 0.5rem 2.5rem;
+    background-color: #f57224;
+    color: #fff;
+}
