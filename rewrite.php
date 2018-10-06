@@ -18,6 +18,8 @@
         require $root."search.php";
     } elseif  ($just_url[0] == "/LazaLend/loan-item") {
         require $root."listing.php";
+    } elseif  ($just_url[0] == "/LazaLend/bids") {
+        require $root."bids.php";
     }
 
     if($just_url[0] == "/admin") {

@@ -1,0 +1,167 @@
+.bids-container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 500px;
+}
+
+.bids-container::-webkit-scrollbar {
+    display: none;
+}
+
+.card-header-profile {
+    width: 45px;
+    height: 45px;
+    margin-top: 5px;
+    border-radius: 50%;
+}
+
+.bid-content-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    color: #616161;
+    font-weight: bold;
+}
+  
+.bid-content-username {
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    color: #a0a0a0;
+}
+
+.bid-content-description {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    color: black;
+}
+
+.bid-content-time {
+    margin-left: auto;
+    margin-right: 0;
+    font-size: 14px;
+    color: #a0a0a0;
+}
+
+.bid-row {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.bid-header-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.bid-bottom-row {
+    display: -ms-flexbox;
+    display: flex
+}
+
+.pull-left {
+    padding-right: 10px;
+}
+
+.bids-buttons {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.bid-content {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex: 1 0;
+    flex: 1 0;
+    overflow: hidden
+}
+
+.item-content {
+    display: -ms-flexbox;
+    display: flex;
+    width: calc(100% - 4.8rem);
+    -ms-flex-direction: column;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.item-content-pic {
+    margin-left: .6rem;
+    overflow: hidden;
+    width: 60px;
+    height: 60px;
+}
+
+.item-pic {
+    width: 100%;
+    height: auto;
+}
+
+/*Right side display*/
+.bid-display-box {
+    margin-top: 25%;
+    display: flex;
+    flex-flow: column nowrap;
+    border-bottom: 1px solid #edf0f7;
+    margin-bottom: 10px;
+}
+
+.bid-display-header {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 8px;
+}
+
+.bid-display-profile {
+    width: 72px;
+    height: 72px;
+    margin-top: 5px;
+    border-radius: 50%;
+}
+
+.bid-display-username {
+    padding-top: 21px;
+    padding-left: 11px;
+    color:black;
+    font-size: 22px;
+}
+
+.bid-display-content {
+    flex-flow: column;
+    display: flex;
+}
+
+.bid-display-content-pic {
+    margin-top: 10px;
+    width: 72px;
+    height: 72px;
+}
+
+.bid-display-content-name {
+    padding-top: 3px;
+    padding-left: 11px;
+    color:black;
+    font-size: 20px;
+}
+
+.bid-display-content-fee {
+    padding-left: 11px;
+    font: 20px;
+    color: #a0a0a0;
+}
+
+.bid-offer-buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+.p-l {
+    padding-left: 11px;
+}
