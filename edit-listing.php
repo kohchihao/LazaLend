@@ -14,26 +14,12 @@
 
     $item_id = $_GET['id'];
     $item_details = getItem($item_id);
-    /*
-    $q_i = 'SELECT user_id, category_id, fee, name, description, pickup_lat, pickup_long, return_lat, return_long, date_available, borrowed FROM items WHERE id = '.$item_id;
-    $go_qi = pg_query($q_i);
-    $item_details = pg_fetch_assoc($go_qi);
-    */
+
     if($item_details['user_id'] != $user_id) {
         header('Location: /LazaLend');
     }
 
-    $q_ii = 'SELECT image_link, cover FROM item_images WHERE item_id = ' . $item_id;
-    $go_qii = pg_query($query);
-    $item_images = array();
-    while ($fe_q = pg_fetch_assoc($go_q)) {
-        if ($fe_q['cover'] == 'TRUE') {
-            array_unshift($item_images, $fe_q['image_link']);
-        } else {
-            array_push($item_images, $fe_q['image_link']);
-        }
-    }
-    if(isset($_POST['loan_item_submit'])) {
+    if(isset($_POST['edit-item-submit'])) {
         $base_url = "https://" . MAPS_HOST . "/maps/api/geocode/json?key=" . GMAPS_API_KEY;
         $file_target_dir = "storage/items/";
         $target_files = Array();
@@ -49,6 +35,7 @@
             $errors['location'] = "Oops! Item fee cannot be empty";
         }
 
+        /*
         if(sizeof($errors) == 0) {
             $request_pickup_url = $base_url . "&address=" . urlencode($_POST['item_pickup']);
         }
@@ -90,27 +77,7 @@
                 }
             }
         }
-
-        // Check if file is valid
-        $count = 0;
-        foreach($_FILES['loan_images']['name'] as $file_name) {
-            if($file_name != "") {
-                $target_file = $file_target_dir . time() . $count . "-" . basename($file_name) ;
-                $target_files[] = $target_file;
-                $files_tmp_names[] = $_FILES["loan_images"]["tmp_name"][$count];
-                $valid_image = isValidImage($target_file);
-
-                if(!$valid_image) {
-                    $errors['images'] = 'Oops! One of the image is an invalid image';
-                }
-            }
-            $count++;
-        }
-
-        // Check if there is a cover image
-        if($_FILES['loan_images']['size'][0] == 0) {
-            $errors['cover_image'] = 'Oops! Please supply a cover image';
-        }
+        */
 
         if(sizeof($errors) == 0 && $_POST['item_fee'] < 1000000) {
             $update = "UPDATE items SET ".
@@ -118,10 +85,10 @@
                 ", fee = ".pg_escape_string($_POST['item_fee']).
                 ", name = '".pg_escape_string($_POST['item_name']).
                 "', description = '".pg_escape_string($_POST['item_description']).
-                "', pickup_lat = '".$pickup_lat.
+                /*"', pickup_lat = '".$pickup_lat.
                 "', pickup_long = '".$pickup_long.
                 "', return_lat = '".$return_lat.
-                "', return_long = '".$return_long.
+                "', return_long = '".$return_long.*/
                 "', date_available = '".pg_escape_string($_POST['item_available']).
                 "' WHERE id = ".$item_id.";";
 
@@ -131,7 +98,7 @@
         }
 
         if(sizeof($errors) == 0) {
-            header("Location: /LazaLend");
+            header("Location: view-listing.php?id=".$item_id);
         }
     }
 
@@ -149,13 +116,13 @@
             'TITLE' => 'Edit Listing: '.$item_details['name'],
             'CSS' => '
                 <!-- Include Your CSS Link Here -->
-                <link rel="stylesheet" href="./css/listing.css">
+                <link rel="stylesheet" href="./css/edit-listing.css">
             '
         ),
        'FOOTER' => Array (
             'JS' => '
                 <!-- Include Your JavaScript Link Here -->
-                <script src = "./js/listing.js"></script>
+                <script src = "./js/edit-listing.js"></script>
             '
        )
     );
@@ -164,40 +131,13 @@
 ?>
 
 <form method = "POST" enctype="multipart/form-data" action = "">
-    <!-- Images -->
-    <section class = "loan-item" id = "loan-images">
-        <div class = "loan-navigation">
-            <a href = "/LazaLend" class = "back-btn">
-                <i class="fas fa-arrow-left"></i>
-            </a>
-            <h4 class = "nav-title"><span>Choose Photos</span></h4>
-        </div>
-
-        <div class = "loan-images-container row">
-            <?php foreach($item_images as $counter=>$item_image) {?>
-                    <div class="col-sm-6 loan-images">
-                        <?=image_selected($counter, $item_image['image_link'])?>
-                    </div>
-                <?php}
-                for($i = count($item_images); $i < 4; $i++) {?>
-                    <div class="col-sm-6 loan-images">
-                        <?=no_image_selected($i)?>
-                    </div>
-                <?php}?>
-        </div>
-
-        <div class = "btn-container">
-            <button type = "button" class = "btn" id = "go-to-category-btn" onclick = "go_to_loan_category()" disabled>Next: Choose a category</button>
-        </div>
-    </section>
-
     <!-- Categories -->
-    <section class = "loan-item hidden" id = "loan-categories">
+    <section class = "loan-item" id = "loan-categories">
         <div class = "loan-navigation">
-            <a class = "back-btn" onclick = "back_to_loan_image()">
+            <a href = "view-listing.php?id=<?=$item_id?>" class = "back-btn">
                 <i class="fas fa-arrow-left"></i>
             </a>
-            <h4 class = "nav-title"><span>Choose a Category</span></h4>
+            <h4 class = "nav-title"><span>Choose a Category (Images cannot be edited)</span></h4>
         </div>
 
         <div class = "">
@@ -206,7 +146,7 @@
             <ul class = "categories">
                 <?php foreach($categories as $category) { ?>
                 <li class = "category">
-                    <a class = "category-text" onclick = "select_category(<?=$category['id']?>)"><?=$category['name']?><?=($category['id'] == $item_details['category_id'])?'(Current Category)':''?></a>
+                    <a class = "<?=($category['id'] == $item_details['category_id'])?'current-category-text':'category-text'?> " onclick = "select_category(<?=$category['id']?>)"><?=$category['name']?><?=($category['id'] == $item_details['category_id'])?' (Current Category)':''?></a>
                 </li>
                 <?php } ?>
             </ul>
@@ -308,7 +248,7 @@
         </div>
 
          <div class = "btn-container submit-btn-container">
-            <input type = "submit" class = "btn" id = "loan-item-submit" name = "loan-item-submit" value = "Update Listing!">
+            <input type = "submit" class = "btn" id = "edit-item-submit" name = "edit-item-submit" value = "Update Listing!">
         </div>
     </section>
 </form>
