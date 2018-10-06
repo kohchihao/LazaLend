@@ -55,7 +55,7 @@ function back_to_loan_image() {
 
 function back_to_loan_category() {
     $('#loan-categories').show();
-    $('#loan-details').show();
+    $('#loan-details').hide();
 }
 
 function show_error(error_msg) {
