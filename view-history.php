@@ -39,7 +39,7 @@ require $root . "template/01-head.php";
                 <div class="item-container col-md-4">   
                     <div class="item-header">
                         <div class="item-header-content">
-                            <span class="item-header-content-time"><?=get_time_ago( strtotime($item['created']) );?></span>
+                            <span class="item-header-content-time">Listed <?=get_time_ago( strtotime($item['created']) );?></span>
                         </div>
                     </div>
                 
