@@ -26,7 +26,6 @@
     if($pickup_status == "OK") {
         $pickup_address = $pickup_obj->results[0]->formatted_address;
     }
-    var_dump($request_pickup_url);
 
     $request_return_url = $base_url . "&latlng=" . urlencode($item_details['return_lat']) . "," . $item_details['return_long'];
     $return_json = file_get_contents($request_return_url);
