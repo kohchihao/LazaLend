@@ -5,38 +5,44 @@
 
     $item_id = $_GET['id'];
 
-    // Update Items
-    if(isset($_POST['update_item'])) {
-        $update = "UPDATE items SET name = '" . $_POST['item_name'] . "', fee = " . $_POST['item_fee'] . " WHERE id = " . $item_id;
-        $go_u = pg_query($update);
+    session_start();
 
-        header("Location: /LazaLend/");
-        die();
+    $errors = Array();
+
+    // Create Bids
+    if(isset($_POST['submit_bid'])) {
+        $success = createBid($_SESSION['loggedInUserId'], $item_id, $_POST['bid_day'], $_POST['bid_fee'], $_POST['date_of_loan']);
+
+        if($success == false) {
+            $errors['create_bids'] = "Oops! Something went wrong in the bidding process.";
+        } else {
+            // TODO: Change to go to bids page
+            // header("Location: /LazaLend");
+            header("Location: /bids");
+        }
     }
-    // End of Update Items
-
-    // Item Details
-    // $query = 'SELECT id, user_id, name, description, fee, pickup_lat, pickup_long, return_lat, return_long, date_available, borrowed
-    //   FROM items WHERE id = ' . $item_id;
-    // $go_q = pg_equery($query);
-    // $item_details = array();
-    // $item_details = pg_fetch_assoc($go_q);
-    // // Item Images
-    // $query = 'SELECT image_link, cover FROM item_images WHERE item_id = ' . $item_id;
-    // $go_q = pg_equery($query);
-    // $item_images = array();
-    // while ($fe_q = pg_fetch_assoc($go_q)) {
-    //     if ($fe_q['cover'] == 'TRUE') {
-    //         array_unshift($item_images, $fe_q['image_link']);
-    //     } else {
-    //         array_push($item_images, $fe_q['image_link']);
-    //     }
-    // }
-    // End of Item Details
+    // End of Create Bids
 
     // Item Details
     $item_details = getItem($item_id);
     // End of item details
+
+    // Get All Item Bids
+    $bids = getItemBids($item_id);
+    // End of Get All Item Bids
+
+    // Get user bid
+    $user_bid = Array("bid_price" => "", "duration_of_loan" => "", "date_of_loan" => date('Y-m-d'));
+    $user_has_bid = false;
+    if (isset($_SESSION['loggedInUserId'])) {
+        $temp_user_bid = getUserBid($_SESSION['loggedInUserId'], $item_id);
+
+        if($temp_user_bid) {
+            $user_has_bid = true;
+            $user_bid = $temp_user_bid;
+        }
+    }
+    // End of user bid
 
     $_M = Array(
         'HEAD' => Array (
@@ -103,9 +109,13 @@ require $root."template/01-head.php";
                     <div class = "mt-4 item-action">
                         <!-- only show edit option if owner is logged in -->
                         <?php if (isset($_SESSION['loggedInUserId']) && $_SESSION['loggedInUserId'] == $item_details['user_id']) {?>
-                            <a href = "edit-listing.php?id=<?=$item_id?>" class = "btn blue-btn">Edit Listing</a>
+
+                            <a href="edit-listing.php?id=<?=$item_id?>" class = "btn blue-btn">Edit Listing</a>
+                        <?php } else if (isset($_SESSION['loggedInUserId']) && $user_has_bid) { ?>
+                            <a data-toggle="modal" data-target="#make-bid" class = "btn blue-btn">Update Offer</a>
+
                         <?php } else { ?>
-                            <a href = "bid?id=<?=$item_id?>" class = "btn blue-btn <?=isNotLoggedIn()?>">Make Offer</a>
+                            <a data-toggle="modal" data-target="#make-bid" class = "btn blue-btn <?=isNotLoggedIn()?>">Make Offer</a>
                         <?php } ?>
                     </div>
 
@@ -169,6 +179,94 @@ require $root."template/01-head.php";
         </div>
     </section>
 
+    <div class="modal" id="make-bid">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+
+                    <h4>Bid for <?=$item_details['name']?></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div>
+                        <div class = "row justify-content-center">
+                            <div class = "col-sm-4 bids-info">
+                                <p>Lowest Bid:</p>
+                                <span>
+                                    S$
+                                    <?php 
+                                        if (empty($bids['min_bid'])) {
+                                            echo "0";
+                                        } else {
+                                            echo $bids['min_bid'];
+                                        }  
+                                    ?>
+                                </span>
+                            </div>
+                            <div class = "col-sm-2"></div>
+                            <div class = "col-sm-4 bids-info">
+                                <p>Highest Bid:</p>
+                                <span>
+                                    S$
+                                    <?php 
+                                        if (empty($bids['max_bid'])) {
+                                            echo "0";
+                                        } else {
+                                            echo $bids['max_bid'];
+                                        }  
+                                    ?>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class = "item-info mt-4">
+                        <div class = "row justify-content-center">
+                            <div class = "col-sm-3">
+                                <span>Fee per day:</span>
+                            </div>
+                            
+                            <div class = "col-sm-8">
+                                <span>S$<?=$item_details['fee']?></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class = "bidder-input-container mt-4">
+                        <h4>Your bid: </h4>
+                        <form method = "POST" action = "">
+                            <input type = "text" class = "form-control mt-3" name = "bid_day" placeholder = "Number of days to loan" value = "<?=$user_bid['duration_of_loan']?>">
+                            <input type = "text" class = "form-control mt-2" name = "bid_fee" placeholder = "Enter Bid Amount (Amount is taken as per day)" value = "<?=$user_bid['bid_price']?>">
+                            <input type = "date" name = "date_of_loan" placeholder = "Date of Loan" class = "form-control mt-2" value = "<?=$user_bid['date_of_loan']?>">
+                            
+                            <div class = "btn-container mt-3">
+                                <input type = "submit" class = "btn submit-bid" name = "submit_bid" value = "Place Bid">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <?php
     require $root."template/footer.php";
+
+    if (sizeof($errors)) { 
+        foreach($errors as $error) {
+?>
+
+            <script>show_error('<?=$error?>');</script>
+
+<?php
+        }        
+    } 
 ?>
