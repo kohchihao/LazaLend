@@ -109,9 +109,11 @@ require $root."template/01-head.php";
                     <div class = "mt-4 item-action">
                         <!-- only show edit option if owner is logged in -->
                         <?php if (isset($_SESSION['loggedInUserId']) && $_SESSION['loggedInUserId'] == $item_details['user_id']) {?>
+
                             <a href="edit-listing.php?id=<?=$item_id?>" class = "btn blue-btn">Edit Listing</a>
                         <?php } else if (isset($_SESSION['loggedInUserId']) && $user_has_bid) { ?>
                             <a data-toggle="modal" data-target="#make-bid" class = "btn blue-btn">Update Offer</a>
+
                         <?php } else { ?>
                             <a data-toggle="modal" data-target="#make-bid" class = "btn blue-btn <?=isNotLoggedIn()?>">Make Offer</a>
                         <?php } ?>

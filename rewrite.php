@@ -22,5 +22,15 @@
 
     if($just_url[0] == "/admin") {
         require $adminRoot."index.php";
+    } elseif  ($just_url[0] == "/LazaLend/admin/homepage") {
+        require $adminRoot."homepage.php";
+    } elseif  ($just_url[0] == "/LazaLend/admin/individual-user") {
+        require $adminRoot."individual-user.php";
+    } elseif  ($just_url[0] == "/LazaLend/admin/all-user") {
+        require $adminRoot."all-user.php";
+    } elseif  ($just_url[0] == "/LazaLend/admin/categories") {
+        require $adminRoot."categories.php";
+    } elseif  ($just_url[0] == "/LazaLend/admin/loan-item") {
+        require $adminRoot."listing.php";
     }
 ?>
