@@ -18,7 +18,7 @@
         } else {
             // TODO: Change to go to bids page
             // header("Location: /LazaLend");
-            header("Location: /bids");
+            header("Location: /LazaLend/bids");
         }
     }
     // End of Create Bids
