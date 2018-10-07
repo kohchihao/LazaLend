@@ -125,7 +125,7 @@
         }
 
         if(sizeof($errors) == 0) {
-            header("Location: /LazaLend");
+            header("Location: view-listing.php?id=".$item_id);
         }
     }
 

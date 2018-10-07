@@ -103,7 +103,7 @@ require $root."template/01-head.php";
                     <div class = "mt-4 item-action">
                         <!-- only show edit option if owner is logged in -->
                         <?php if (isset($_SESSION['loggedInUserId']) && $_SESSION['loggedInUserId'] == $item_details['user_id']) {?>
-                            <a href="item-dashboard.php?id=<?=$item_id?>" class = "btn blue-btn">Edit Listing</a>
+                            <a href = "edit-listing.php?id=<?=$item_id?>" class = "btn blue-btn">Edit Listing</a>
                         <?php } else { ?>
                             <a href = "bid?id=<?=$item_id?>" class = "btn blue-btn <?=isNotLoggedIn()?>">Make Offer</a>
                         <?php } ?>
