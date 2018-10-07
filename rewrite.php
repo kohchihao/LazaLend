@@ -20,9 +20,23 @@
         require $root."listing.php";
     } elseif  ($just_url[0] == "/LazaLend/bids") {
         require $root."bids.php";
+    } elseif  ($just_url[0] == "/LazaLend/edit-listing") {
+        require $root."edit-listing.php";
+    } elseif  ($just_url[0] == "/LazaLend/view-history") {
+        require $root."view-history.php";
     }
 
     if($just_url[0] == "/admin") {
         require $adminRoot."index.php";
+    } elseif  ($just_url[0] == "/LazaLend/admin/homepage") {
+        require $adminRoot."homepage.php";
+    } elseif  ($just_url[0] == "/LazaLend/admin/individual-user") {
+        require $adminRoot."individual-user.php";
+    } elseif  ($just_url[0] == "/LazaLend/admin/all-user") {
+        require $adminRoot."all-user.php";
+    } elseif  ($just_url[0] == "/LazaLend/admin/categories") {
+        require $adminRoot."categories.php";
+    } elseif  ($just_url[0] == "/LazaLend/admin/loan-item") {
+        require $adminRoot."listing.php";
     }
 ?>

@@ -1,18 +1,20 @@
 <?php 
-    $root = __DIR__."/";
+    $adminRoot = __DIR__ . "/";
+    $root = __DIR__ . "/../";
     require_once $root."cfg.php";
-    require_once $root."template/template_jy.php";
+    require_once $adminRoot."template/template_jy.php";
 
     session_start();
 
-    if(!$_SESSION['loggedInUserId']) {
-        header('Location: /LazaLend');
-    } 
+    if (!isset($_SESSION['loggedInAdminId'])) {
+        header("location: /LazaLend/admin/");
+    }
 
-    $user_id = $_SESSION['loggedInUserId'];
+    //$user_id = $_SESSION['loggedInUserId'];
     $errors = Array();
 
     if(isset($_POST['loan_item_submit'])) {
+        $user_id = $_POST['choose_user_id'];
         $base_url = "https://" . MAPS_HOST . "/maps/api/geocode/json?key=" . GMAPS_API_KEY;
         $file_target_dir = "storage/items/";
         $target_files = Array();
@@ -112,20 +114,20 @@
                         
                         $go_ii = pg_query($insert_ii);
                     } else {
-                        $errors['upload_img'] = 'Oops! Something went wrong when uploading your image';
+                        $errors['upload_img'] = 'Oops something went wrong when uploading image. Please try again!';
                     }
                 }
            } else {
-               $errors['insert_loan'] = 'Oops! Something went wrong when creating your loan';
+               $errors['insert_loan'] = "Something went wrong while creating loan. Please try again.";
            }
         } else {
             if($_POST['item_fee'] >= 1000000) {
-                $errors['fee'] = "Oops! Item Fee cannot be more than $999,999.";
+                $errors['fee'] = "Item Fee can be more than $999,999";
             }
         }
 
         if(sizeof($errors) == 0) {
-            header("Location: view-listing?id=".$item_id);
+            header("Location: /LazaLend/admin");
         }
     }
 
@@ -137,6 +139,8 @@
     while($fe_qc = pg_fetch_assoc($go_qc)) {
         $categories[] = $fe_qc;
     }
+
+    $users = getAllUsers();
 
     $_M = Array(
         'HEAD' => Array (
@@ -154,7 +158,7 @@
        )
     );
 
-    require $root."template/01-head.php";
+    require $adminRoot."template/01-head.php";
 ?>
 
 <form method = "POST" enctype="multipart/form-data" action = "">
@@ -280,7 +284,7 @@
                 </div>
             </fieldset>
                 
-            <fieldset>
+            <fieldset class = "fs">
                 <div class = "fs-description">
                     <div>Description</div>
                 </div>
@@ -289,6 +293,24 @@
                     <div class = "itd-b">
                         <span class = "itd-c">
                             <textarea rows = "3" placeholder = "Describe what you are loaning and include any details a borrower might be interested in." name = "item_description" class = "items-input"></textarea>
+                        </span>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class = "fs-description">
+                    <div>Which User</div>
+                </div>
+
+                <div class = "item-details">
+                    <div class = "itd-b">
+                        <span class = "itd-c">
+                            <select id="dropdown" class="form-control" data-live-search="true" name="choose_user_id" >
+                            <?php foreach($users as $user) { ?>
+                                <option value="<?=$user['id']?>"><?=$user['email']?></option>
+                            <?php } ?>
+                            </select>
                         </span>
                     </div>
                 </div>
@@ -302,7 +324,7 @@
 </form>
 
 <?php  
-    require $root."template/footer.php";
+    require $adminRoot."template/footer.php";
 
     if (sizeof($errors)) { 
         foreach($errors as $error) {
