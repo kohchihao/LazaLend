@@ -16,7 +16,7 @@
     $item_details = getItem($item_id);
 
     if($item_details['user_id'] != $user_id) {
-        header('Location: view-listing.php?id='.$item_id);
+        header('Location: view-listing?id='.$item_id);
     }
 
     if(isset($_POST['edit-item-submit'])) {
@@ -92,7 +92,7 @@
         }
 
         if(sizeof($errors) == 0) {
-            header("Location: view-listing.php?id=".$item_id);
+            header("Location: view-listing?id=".$item_id);
         }
     }
     // Fetch address from lat/long
@@ -148,7 +148,7 @@
     <!-- Categories -->
     <section class = "loan-item" id = "loan-categories">
         <div class = "loan-navigation">
-            <a href = "view-listing.php?id=<?=$item_id?>" class = "back-btn">
+            <a href = "view-listing?id=<?=$item_id?>" class = "back-btn">
                 <i class="fas fa-arrow-left"></i>
             </a>
             <h4 class = "nav-title"><span>Choose a Category (Images cannot be edited)</span></h4>
