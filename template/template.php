@@ -234,7 +234,6 @@ function getItemsBasedOnUser($user_id) {
     image.image_link,
     image.cover AS cover_image
     FROM items item, item_images image, categories c
-    
     WHERE item.id = image.item_id 
     AND item.user_id = " . $user_id ."
     AND c.id = category
@@ -262,6 +261,7 @@ function getItemsBasedOnUser($user_id) {
         $items[$fe_q['item_id']]['categories_image_url'] = $fe_q['categories_image_url'];
         $items[$fe_q['item_id']]['username'] = $fe_q['user_username'];
         $items[$fe_q['item_id']]['profile_image_url'] = $fe_q['user_profile_image_url'];
+
         if ($fe_q['cover_image'] == t) {
             $items[$fe_q['item_id']]['cover_image'] = $fe_q['image_link'];
         } else {
