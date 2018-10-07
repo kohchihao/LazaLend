@@ -125,7 +125,7 @@
         }
 
         if(sizeof($errors) == 0) {
-            header("Location: view-listing.php?id=".$item_id);
+            header("Location: view-listing?id=".$item_id);
         }
     }
 
