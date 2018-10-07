@@ -81,7 +81,7 @@
                                 </div>
 
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link m-2 menu-item"><i class="fas fa-envelope"></i></a>
+                                    <a href="bids" class="nav-link m-2 menu-item"><i class="fas fa-envelope"></i></a>
                                 </li>
 
 
