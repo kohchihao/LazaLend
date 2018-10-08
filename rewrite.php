@@ -24,6 +24,8 @@
         require $root."edit-listing.php";
     } elseif  ($just_url[0] == "/LazaLend/view-history") {
         require $root."view-history.php";
+    } elseif  ($just_url[0] == "/LazaLend/delete-item") {
+        require $root."delete-item.php";
     }
 
     if($just_url[0] == "/admin") {

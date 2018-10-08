@@ -365,5 +365,19 @@ function get_time_ago($time) {
     }
 }
 
+//delete item based on item.
+function deleteItem($item_id) {
+  $query = "
+  DELETE FROM items 
+  WHERE id = " . $item_id;
+
+  $go_q = pg_query($query);
+  if (pg_affected_rows($go_q) == 1 ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 
 ?>

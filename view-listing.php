@@ -97,7 +97,7 @@ require $root."template/01-head.php";
                 <!-- only show delete option if owner is logged in -->
                 <?php if (isset($_SESSION['loggedInUserId']) && $_SESSION['loggedInUserId'] == $item_details['user_id']) {?>
                     <div class = "mt-4 mb-5 del-btn-container"> 
-                        <a href="delete-item.php?id=<?=$item_id?>" class = "btn btn-danger delete-btn">Delete Listing</a>
+                        <a href="delete-item?id=<?=$item_id?>" class = "btn btn-danger delete-btn">Delete Listing</a>
                     </div>
                 <?php } ?>
 
