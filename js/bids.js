@@ -4,7 +4,7 @@ $(".bids-buttons").on('click', '#allBidsBtn', function() {
   $("#lendBtn").removeClass("active");
   $("#allBidsBtn").addClass("active");
 
-  $.post("/LazaLend/php/ajax_dk.php",
+  $.post("/LazaLend/php/ajax.php",
     {
         action: "getAllBids",      
     }, function(data) {
@@ -20,7 +20,7 @@ $(".bids-buttons").on('click', '#borrowBtn', function() {
   $("#allBidsBtn").removeClass("active");
   $("#borrowBtn").addClass("active");
 
-  $.post("/LazaLend/php/ajax_dk.php",
+  $.post("/LazaLend/php/ajax.php",
     {
         action: "getBorrowBids",       
     }, function(data) {
@@ -36,7 +36,7 @@ $(".bids-buttons").on('click', '#lendBtn', function() {
   $("#allBidsBtn").removeClass("active");
   $("#lendBtn").addClass("active");
 
-  $.post("/LazaLend/php/ajax_dk.php",
+  $.post("/LazaLend/php/ajax.php",
     {
         action: "getLendBids",      
     }, function(data) {
@@ -57,7 +57,7 @@ $(".col-6").on('click', '.updateOfferBtn', function() {
     console.log(value);
     console.log($(this).data("id"));
 
-    $.post("/LazaLend/php/ajax_dk.php",
+    $.post("/LazaLend/php/ajax.php",
       {
           action: "updateBidPrice",
           bid_id: $(this).data("id"),
@@ -170,7 +170,7 @@ $(".bids-container").on('click', '.each-bid-row', function (){
   // else borrowing item
   if ($(this).data("user_id") === $(this).data("owner_id")) {
       console.log("pass");
-      $.post("/LazaLend/php/ajax_dk.php",
+      $.post("/LazaLend/php/ajax.php",
       {
           action: "getLendBidDisplay",
           bid_id: $(this).data("id")
@@ -182,7 +182,7 @@ $(".bids-container").on('click', '.each-bid-row', function (){
     );
   } else {
     console.log("fail");
-    $.post("/LazaLend/php/ajax_dk.php",
+    $.post("/LazaLend/php/ajax.php",
       {
           action: "getBorrowBidDisplay",
           bid_id: $(this).data("id")
