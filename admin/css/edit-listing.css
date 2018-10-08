@@ -1,0 +1,267 @@
+body {
+  background-color: #f2f2f2;
+}
+
+.loan-navigation {
+  position: relative;
+  display: flex;
+  flex: 1 0;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  align-items: center;
+  margin-right: 0.5rem;
+}
+
+.loan-navigation .nav-title {
+  margin-left: 0.5rem;
+}
+
+.loan-navigation .nav-title span {
+  background-image: linear-gradient(90deg,#d2232a,#ff643e);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  color: #d2232a;
+}
+
+.highlighted-text {
+  color: #ff9c1a;
+}
+
+.back-btn {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  top: -0.85rem;
+  left: -4.25rem;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
+  background-color: #fff;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.back-btn:not([href]):not([tabindex]){
+  color: #aaa;
+}
+
+.back-btn:hover {
+  text-decoration: none;
+}
+
+.btn-container {
+  width: 90%;
+  text-align: right;
+}
+
+.submit-btn-container {
+  width: 100%;
+  margin-top: 2rem;
+  padding-right: 0.5rem;
+}
+
+.loan-item {
+  box-shadow: 0 2px 4px 0 #c9ced6;
+  width: 90%;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 2.5rem 2rem;
+  background-color: #fff;
+}
+
+/* ============= Loan Images Style ================== */
+
+.loan-images-container {
+  width: 50%;
+  margin: 3rem auto;
+}
+
+.loan-images {
+  display: inline-block;
+  padding: 0 1.5rem .6rem 0;
+}
+
+.loan-cover {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: #f57224;
+  padding: 0 6px;
+  color: #fff;
+  border-radius: 0 0 6px 0;
+  font-size: 16px;
+}
+
+.loan-thumb {
+  color: #b3b3b3;
+  border-radius: 4px;
+  width: 100%;
+  cursor: pointer;
+  padding-top: 100%; /* 1:1 Aspect Ratio */
+  position: relative; /* If you want text inside of it */
+}
+
+.loan-thumb-content {
+  position:  absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  color: #8f939c;
+  border-radius: 4px;
+  background-color: #f5f5f5
+}
+
+.loan-thumb-content img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.del-loan-images {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background-color: rgba(0,0,0,.3);
+  border-color: #bfbfbf;
+  color: #fff;
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+  padding: 6px 1em;
+  font-size: 16px;
+  border-radius: 4px;
+}
+
+#go-to-category-btn:disabled {
+  color: #c9ced6;
+  background: #8f939c;
+}
+
+#go-to-category-btn, #loan-item-submit {
+  padding: 0.75rem 1.5rem;
+  border: 0;
+  color: #fff;
+  background: #33a0e8;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.19);
+}
+
+/* ============ End of Loan Images Style ================ */
+
+/* ============= Loan Catagories Style ================== */
+.categories {
+  display: flex; 
+  flex-flow: row wrap;
+  align-content: start;
+  background-color: #fff;
+}
+
+.category {
+  list-style: none;
+  flex: 1 0 50%;
+  display: inline-block;
+  padding: 1.5rem 0;
+}
+
+.category-text:not([href]):not([tabindex]){
+  text-decoration: underline;
+  cursor: pointer;
+  color: #8f939c;
+}
+
+.current-category-text:not([href]):not([tabindex]){
+  text-decoration: underline;
+  cursor: pointer;
+  color: #2196F3;
+}
+
+/* =========== End of Loan Categories Style ============= */
+
+/* ================ Loan Details Style ===================== */
+.details-container {
+  background-color: #edf0f7;
+  margin: 2rem 0.5rem 1rem 0.5rem;
+  border: 1px solid #c9ced6;
+  border-radius: .4rem;
+  overflow: hidden;
+}
+
+.fs {
+  margin-bottom: 2rem;
+}
+
+.fs-description {
+  display: flex;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: .1rem;
+  color: #8f939c;
+  margin: 0;
+  padding: 0 1.65rem .5rem;
+  border: 0;
+}
+
+.item-details {
+  position: relative;
+  background: #fff;
+  padding: 1.4rem 1.2rem;
+  font-size: 1.4rem;
+  padding: 0.75rem 1.2rem;
+}
+
+.itd-b {
+  display: flex;
+  position: relative;
+  border-bottom: 1px solid #edf0f7;
+  margin-top: 0.35rem;
+}
+
+.itd-c {
+  z-index: 2;
+  -ms-flex: 1 0 0;
+  flex: 1 0 0;
+  position: relative;
+}
+
+.items-input {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: 0 0;
+  caret-color: #33a0e8;
+  font-size: 14px;
+}
+
+.required:after {
+  opacity: 1;
+  content: "";
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 4px;
+  background-color: #ff9c1a;
+  transform: translateY(-50%);
+  top: 50%;
+  transition: opacity .15s;
+}
+
+.more-details {
+  padding: .8rem 1.6rem;
+  font-size: 12px;
+  color: #8f939c;
+}
+
+/* ============= End of Loan Details Style ================== */
+

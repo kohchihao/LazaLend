@@ -144,7 +144,7 @@ require $adminRoot . "template/01-head.php";
 
         <td>
           <div class="d-flex flex-row">
-            <a class="btn btn-primary m-1" href="#" role="button">Modify</a>
+            <a class="btn btn-primary m-1" href="edit-listing?id=<?=$item['id']?>&userid=<?=$item['user_id']?>" role="button">Modify</a>
             <form method="POST">
               <button type="submit" class="btn btn-danger m-1" name="delete" value="<?=$item_id?>" >Delete</button>
             </form>
