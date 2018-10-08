@@ -87,7 +87,7 @@
         AND it.category_id = c.id
         AND it.user_id = u.id';
         
-        $go_q = pg_equery($query);
+        $go_q = pg_query($query);
 
         $item = Array();
         $item['image_link'] = Array();
