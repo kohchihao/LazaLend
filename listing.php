@@ -92,14 +92,8 @@
         }
 
         if(sizeof($errors) == 0 && $_POST['item_fee'] < 1000000) {
-           $insert = "INSERT INTO items (user_id, category_id, fee, name, description, pickup_lat, pickup_long, return_lat, return_long, date_available)
-                VALUES (".$user_id.", ".pg_escape_string($_POST['select_category']).", ".pg_escape_string($_POST['item_fee']).", '".pg_escape_string($_POST['item_name'])."', '".pg_escape_string($_POST['item_description'])."', '".$pickup_lat."', '".$pickup_long."', '".$return_lat."', '".$return_long."', '".pg_escape_string($_POST['item_available'])."') 
-                RETURNING id
-                ";
-           
-           $go_i = pg_query($insert);
 
-           $item_id = pg_fetch_row($go_i)[0];
+            $item_id = createItem($user_id, $_POST['item_name'], $_POST['item_fee'], $_POST['select_category'], $_POST['item_description'], $pickup_lat, $pickup_long, $return_lat, $return_long, $_POST['item_available']);
 
            if($item_id >= 0) {
                 // Upload Image
@@ -108,9 +102,7 @@
                     if (move_uploaded_file($files_tmp_names[$i], $target_files[$i])) {
                         // Insert into item_images
                         if($i == 0) $is_cover = 'TRUE';  
-                        $insert_ii = "INSERT INTO item_images (item_id, image_link, cover) VALUES (".$item_id.", '/".$target_files[$i]."', ".$is_cover.")";
-                        
-                        $go_ii = pg_query($insert_ii);
+                        createItemImages($item_id, $target_files[$i], $is_cover);
                     } else {
                         $errors['upload_img'] = 'Oops! Something went wrong when uploading your image';
                     }
@@ -129,14 +121,7 @@
         }
     }
 
-    $categories = Array();
-
-    $q_c = 'SELECT id, name FROM categories';
-    $go_qc = pg_query($q_c);
-
-    while($fe_qc = pg_fetch_assoc($go_qc)) {
-        $categories[] = $fe_qc;
-    }
+    $categories = getAllCategories();
 
     $_M = Array(
         'HEAD' => Array (

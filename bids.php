@@ -1,7 +1,8 @@
 <?php
   $root = __DIR__."/";
   require_once $root."cfg.php";
-  require_once $root . "./template/template_dk.php";
+//   require_once $root . "./template/template_dk.php";
+  require_once $root . "./template/template_jy.php";
 
   session_start();
 
@@ -28,6 +29,7 @@
   );
     // To display items inside bids.php
     $bidsName = getAllBidsName();
+    $allBids = getAllBids($user_id);
 
     require $root."template/01-head.php";
 ?>
@@ -54,7 +56,7 @@
                 </div>
 
                 <div class="bids-container" id="bids-content">
-                    <?=getAllBids()?>
+                    <?=getBidsContent($allBids, $user_id)?>
                 </div>
             </div>
 
