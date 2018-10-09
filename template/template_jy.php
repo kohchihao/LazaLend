@@ -180,6 +180,7 @@
             AND i.id = ii.item_id
             AND (b.bidder_id = '".$user_id."')
             AND (u.id = b.owner_id)
+            AND b.item_id NOT IN (SELECT l.item_id FROM loans l)
             UNION
             SELECT
             b.id, b.owner_id, b.bid_price, b.last_updated, i.description, i.name, ii.image_link, u.username, u.profile_image_url
@@ -188,6 +189,7 @@
             AND i.id = ii.item_id
             AND (b.owner_id = '".$user_id."')
             AND (u.id = b.bidder_id)
+            AND b.item_id NOT IN (SELECT l.item_id FROM loans l)
             Order by last_updated DESC
             ";
 
@@ -219,6 +221,7 @@
             AND i.id = ii.item_id
             AND (b.bidder_id = '".$user_id."')
             AND (u.id = b.owner_id)
+            AND b.item_id NOT IN (SELECT l.item_id FROM loans l)
             Order by last_updated DESC
             ";
 
@@ -250,6 +253,7 @@
             AND i.id = ii.item_id
             AND (b.owner_id = '".$user_id."')
             AND (u.id = b.bidder_id)
+            AND b.item_id NOT IN (SELECT l.item_id FROM loans l)
             Order by last_updated DESC
             ";
 
