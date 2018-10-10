@@ -69,16 +69,50 @@ $(".col-6").on('click', '.updateOfferBtn', function() {
 
     );
   }
-
 });
+
+// check which btn is active, refresh accordingly 
+function refreshSideBar() {
+  if ($("#borrowBtn").hasClass("active")) {
+    $.post("/LazaLend/php/ajax.php",
+      {
+        action: "getBorrowBids",      
+      }, function(data) {
+        $('#bids-content').html(data);
+      }
+      , "json"
+    );
+    console.log("Borrow");
+  }
+  
+  if ($("#allBidsBtn").hasClass("active")) {
+    $.post("/LazaLend/php/ajax.php",
+      {
+        action: "getAllBids",      
+      }, function(data) {
+        $('#bids-content').html(data);
+      }
+      , "json"
+    );
+    console.log("all");
+  }
+  
+  if ($("#lendBtn").hasClass("active")) {
+    $.post("/LazaLend/php/ajax.php",
+      {
+        action: "getLendBids",      
+      }, function(data) {
+        $("#bids-content").html(data);
+      }
+      , "json"
+    );
+    console.log("lend");
+  }
+}
 
 // when cancel offer Bids button press
 $(".col-6").on('click', '.cancelOfferBtn', function() {
-    console.log("clickCancel");
-  
-    console.log($(this).data("id"));
-
-    $.post("/LazaLend/php/ajax_dk.php",
+    $.post("/LazaLend/php/ajax.php",
       {
           action: "cancelBidPrice",
           bid_id: $(this).data("id")
@@ -86,47 +120,13 @@ $(".col-6").on('click', '.cancelOfferBtn', function() {
           $('#bid-display').html(data);
       }
       , "json"
-
     );
-
-    // check which btn is active then ajax sidebar 
-    if ($("#borrowBtn").hasClass("active")) {
-      $.post("/LazaLend/php/ajax_dk.php",
-        {
-          action: "getBorrowBids",      
-        }, function(data) {
-          $('#bids-content').html(data);
-        }
-        , "json"
-      );
-    } else if ($("#allBidsBtn").hasClass("active")) {
-      $.post("/LazaLend/php/ajax_dk.php",
-        {
-          action: "getAllBids",      
-        }, function(data) {
-          $('#bids-content').html(data);
-        }
-        , "json"
-      );
-    } else {
-      $.post("/LazaLend/php/ajax_dk.php",
-        {
-          action: "getLendBids",      
-        }, function(data) {
-          $('#bids-content').html(data);
-        }
-        , "json"
-      );
-    }
+    refreshSideBar();
 });
 
 // when accept offer Bids button press
-$(".col-6").on('click', '.acceptBidBtn', function() {
-  console.log("click");
-  
-  console.log($(this).data("id"));
-
-  $.post("/LazaLend/php/ajax_dk.php",
+$(document).on('click', '.acceptBidBtn', function() {
+  $.post("/LazaLend/php/ajax.php",
     {
       action: "acceptBidBtn",
       bid_id: $(this).data("id")       
@@ -135,28 +135,7 @@ $(".col-6").on('click', '.acceptBidBtn', function() {
     }
     , "json"
   );
-
-  // check if lend btn or all bid btn is active then ajax sidebar 
-  if ($("#allBidsBtn").hasClass("active")) {
-    $.post("/LazaLend/php/ajax_dk.php",
-      {
-        action: "getAllBids",      
-      }, function(data) {
-        $('#bids-content').html(data);
-      }
-      , "json"
-    );
-  } else {
-    $.post("/LazaLend/php/ajax_dk.php",
-      {
-        action: "getLendBids",      
-      }, function(data) {
-        $('#bids-content').html(data);
-      }
-      , "json"
-    );
-  }
-
+  refreshSideBar();
 });
 
 // on click row to display individual bid information
@@ -190,7 +169,6 @@ $(".bids-container").on('click', '.each-bid-row', function (){
           $('#bid-display').html(data);
       }
       , "json"
-
     );
   }
 });

@@ -89,7 +89,7 @@
         break;
 
         case 'cancelBidPrice':
-
+            require_once $root."cfg.php";
             require_once $root."template/template_jy.php";
 
             cancelBidPrice($_POST['bid_id']);
@@ -100,7 +100,7 @@
         break;
 
         case 'acceptBidBtn':
-
+            require_once $root."cfg.php";
             require_once $root."template/template_jy.php";
 
             acceptBidBtn($_POST['bid_id']);
