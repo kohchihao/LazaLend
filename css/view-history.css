@@ -119,7 +119,7 @@
   font-weight: bold;
 }
 .item-header-content-time {
-  color: #a0a0a0;
+  color: #808080;
 }
 
 .item-picture {
@@ -141,7 +141,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 14px;
-  color: #a0a0a0;
+  color: #606060;
 }
 
 .item-available {
@@ -153,11 +153,7 @@
 }
 
 .item-done {
-  background-color: #8f939c;
-}
-
-.legend-label {
-  padding-left: 25px;
+  background-color: #cccccc;
 }
 
 .color-legend {

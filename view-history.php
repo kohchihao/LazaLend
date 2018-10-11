@@ -33,7 +33,6 @@ require $root . "template/01-head.php";
 
 <div>
     <h5 class="padding-left-15">Your Items</h5>
-    <h6 class="row legend-label">Item Status Legend</h6>
     <div class="row color-legend">
         <div class="col-auto item-available legend-cell">Available</div>
         <div class="col-auto item-loaned legend-cell">On Loan</div>
