@@ -126,6 +126,8 @@ $(".col-6").on('click', '.cancelOfferBtn', function() {
 
 // when accept offer Bids button press
 $(document).on('click', '.acceptBidBtn', function() {
+  alert('Bid accepted');
+
   $.post("/LazaLend/php/ajax.php",
     {
       action: "acceptBidBtn",
@@ -135,6 +137,7 @@ $(document).on('click', '.acceptBidBtn', function() {
     }
     , "json"
   );
+
   refreshSideBar();
 });
 
