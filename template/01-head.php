@@ -73,7 +73,8 @@
                                     <a href="#" class="nav-link m-2 menu-item dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-user"></i></a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <a class="dropdown-item" href="#"><?=$_SESSION['loggedInUserEmail']?></a>
-                                        <a class="dropdown-item" href="view-history">View History</a>
+                                        <a class="dropdown-item" href="view-history">View Item History</a>
+                                        <a class="dropdown-item" href="view-loan-history">View Loan History</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="logout">Logout</a>
                                     </div>

@@ -380,4 +380,63 @@ function deleteItem($item_id) {
 }
 
 
+function getLoanHistory($user_id) {
+  $query = "SELECT 
+  item.id AS item_id,
+  item.name AS item_name,
+  item.fee AS item_fee,
+  item.description AS item_description,
+  item.pickup_lat AS item_pickup_lat,
+  item.pickup_long AS item_pickup_long,
+  item.return_lat AS item_return_lat,
+  item.return_long AS item_return_long,
+  item.date_available AS item_date_available,
+  item.borrowed AS item_borrowed,
+  item.promoted AS item_promoted,
+  item.created AS item_created,
+  item.last_updated AS item_last_updated,
+  owner.username AS owner_username,
+  owner.profile_image_url AS owner_profile_image_url,
+  borrower.username AS borrower_username,
+  borrower.profile_image_url AS borrower_profile_image_url,
+  image.image_link,
+  image.cover AS cover_image
+  FROM loans loan, users borrower, items item, item_images image, users owner
+  WHERE loan.item_id = item.id 
+  AND loan.borrower_id = borrower.id
+  AND item.id = image.item_id
+  AND owner.id = loan.owner_id
+  AND owner.id = " . $user_id;
+
+  $go_q = pg_equery($query);
+  $items = array();
+
+  while ($fe_q = pg_fetch_assoc($go_q)) {
+    $items[$fe_q['item_id']]['id'] = $fe_q['item_id'];
+    $items[$fe_q['item_id']]['name'] = $fe_q['item_name'];
+    $items[$fe_q['item_id']]['fee'] = $fe_q['item_fee'];
+    $items[$fe_q['item_id']]['description'] = $fe_q['item_description'];
+    $items[$fe_q['item_id']]['pickup_lat'] = $fe_q['item_pickup_lat'];
+    $items[$fe_q['item_id']]['pickup_long'] = $fe_q['item_pickup_lat'];
+    $items[$fe_q['item_id']]['return_lat'] = $fe_q['item_return_lat'];
+    $items[$fe_q['item_id']]['return_long'] = $fe_q['item_return_long'];
+    $items[$fe_q['item_id']]['date_available'] = $fe_q['item_date_available'];
+    $items[$fe_q['item_id']]['borrowed'] = $fe_q['item_borrowed'];
+    $items[$fe_q['item_id']]['promoted'] = $fe_q['item_promoted'];
+    $items[$fe_q['item_id']]['created'] = $fe_q['item_created'];
+    $items[$fe_q['item_id']]['last_updated'] = $fe_q['item_last_updated'];
+    $items[$fe_q['item_id']]['owner_username'] = $fe_q['owner_username'];
+    $items[$fe_q['item_id']]['owner_profile_image_url'] = $fe_q['owner_profile_image_url'];
+    $items[$fe_q['item_id']]['borrower_username'] = $fe_q['borrower_username'];
+    $items[$fe_q['item_id']]['borrower_profile_image_url'] = $fe_q['borrower_profile_image_url'];
+    if ($fe_q['cover_image'] == t) {
+      $items[$fe_q['item_id']]['cover_image'] = $fe_q['image_link'];
+    } else {
+      $items[$fe_q['item_id']]['images'][] = array('image_link' => $fe_q['image_link']);
+    }
+  }
+
+  return $items;
+}
+
 ?>

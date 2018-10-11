@@ -26,6 +26,8 @@
         require $root."view-history.php";
     } elseif  ($just_url[0] == "/LazaLend/delete-item") {
         require $root."delete-item.php";
+    } elseif  ($just_url[0] == "/LazaLend/view-loan-history") {
+        require $root."view-loan-history.php";
     }
 
     if($just_url[0] == "/admin") {
