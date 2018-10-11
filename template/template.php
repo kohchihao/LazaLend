@@ -244,9 +244,11 @@ function getItemsBasedOnUser($user_id) {
 
     $status_query = "SELECT
        item.id AS item_id,
-       loan.date_of_loan AS loan_date,
-       loan.duration_of_loan AS loan_duration,
-       FROM items item LEFT OUTER JOIN loans loan ON item.id = loan.item_id
+       bid.date_of_loan AS loan_date,
+       bid.duration_of_loan AS loan_duration,
+       loan.bid_id AS loan_id
+       FROM items item LEFT OUTER JOIN bids bid ON item.id = bid.item_id
+       LEFT OUTER JOIN loans loan ON bid.id = loan.bid_id
        WHERE item.user_id = ". $user_id ."
        ORDER BY item.created DESC";
 
@@ -274,7 +276,7 @@ function getItemsBasedOnUser($user_id) {
 
         $itemLoan = pg_fetch_assoc($st_q);
         $returnDate = date_add($itemLoan['loan_date'], date_interval_create_from_date_string($itemLoan['loan_duration'].' days'));
-        if (is_null($itemLoan['loan_date'])) {
+        if (is_null($itemLoan['loan_id'])) {
             $items[$fe_q['item_id']]['loan_status'] = 'item-available';
         } else if ($returnDate > new DateTime("now")) {
             $items[$fe_q['item_id']]['loan_status'] = 'item-done';
