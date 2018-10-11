@@ -368,6 +368,9 @@
         $query = "INSERT INTO loans (owner_id, borrower_id, item_id, bid_id)
         SELECT owner_id, bidder_id, item_id, id FROM bids WHERE id = '".$bid_id."'";
         $go_q = pg_query($query);
+
+        $itemQuery = "UPDATE ITEMS SET borrowed = true WHERE id = (SELECT item_id FROM BIDS WHERE id = '".$bid_id."')";
+        $go_q = pg_query($itemQuery);
     }
 
     // To delete the bid 
