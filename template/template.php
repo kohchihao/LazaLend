@@ -214,7 +214,7 @@ function getItemsBasedOnCategory($category_id) {
 
 //Fetch all items based on user_id
 function getItemsBasedOnUser($user_id) {
-    $query = "SELECT 
+    $item_query = "SELECT 
     item.id AS item_id,
     item.name AS item_name,
     item.category_id AS category,
@@ -239,8 +239,18 @@ function getItemsBasedOnUser($user_id) {
     AND c.id = item.category_id
     ORDER BY item.created DESC";
 
-    $go_q = pg_query($query);
+    $go_q = pg_query($item_query);
     $items = array();
+
+    $status_query = "SELECT
+       item.id AS item_id,
+       loan.date_of_loan AS loan_date,
+       loan.duration_of_loan AS loan_duration,
+       FROM items item LEFT OUTER JOIN loans loan ON item.id = loan.item_id
+       WHERE item.user_id = ". $user_id ."
+       ORDER BY item.created DESC";
+
+    $st_q = pg_query($status_query);
 
     while ($fe_q = pg_fetch_assoc($go_q)) {
         $items[$fe_q['item_id']]['id'] = $fe_q['item_id'];
@@ -262,6 +272,16 @@ function getItemsBasedOnUser($user_id) {
         $items[$fe_q['item_id']]['username'] = $fe_q['user_username'];
         $items[$fe_q['item_id']]['profile_image_url'] = $fe_q['user_profile_image_url'];
 
+        $itemLoan = pg_fetch_assoc($st_q);
+        $returnDate = date_add($itemLoan['loan_date'], date_interval_create_from_date_string($itemLoan['loan_duration'].' days'));
+        if (is_null($itemLoan['loan_date'])) {
+            $items[$fe_q['item_id']]['loan_status'] = 'item-available';
+        } else if ($returnDate > new DateTime("now")) {
+            $items[$fe_q['item_id']]['loan_status'] = 'item-done';
+        } else {
+            $items[$fe_q['item_id']]['loan_status'] = 'item-loaned';
+        }
+
         if ($fe_q['cover_image'] == t) {
             $items[$fe_q['item_id']]['cover_image'] = $fe_q['image_link'];
         } else {
@@ -272,7 +292,7 @@ function getItemsBasedOnUser($user_id) {
     return $items;
 }
 
-//Search for items with similar name 
+//Search for items with similar name
 function getItemsBasedOnName($search) {
   $query = "SELECT 
   item.id AS item_id,

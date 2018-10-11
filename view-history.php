@@ -17,7 +17,7 @@ $_M = array(
         'TITLE' => 'View your Listings',
         'CSS' => '
             <!-- Include Your CSS Link Here -->
-            <link rel="stylesheet" href="./css/index.css"></link>
+            <link rel="stylesheet" href="./css/view-history.css"></link>
         ',
     ),
     'FOOTER' => array(
@@ -32,11 +32,17 @@ require $root . "template/01-head.php";
 ?>
 
 <div>
-    <h6 class="padding-left-15">Your Items</h6>
+    <h5 class="padding-left-15">Your Items</h5>
+    <h6 class="row legend-label">Item Status Legend</h6>
+    <div class="row color-legend">
+        <div class="col-auto item-available legend-cell">Available</div>
+        <div class="col-auto item-loaned legend-cell">On Loan</div>
+        <div class="col-auto item-done legend-cell">Loan Over</div>
+    </div>
     <div class="finds-container">
         <?php foreach ($items as $item_id => $item) {?>
             <a href="view-listing?id=<?=$item_id?>">
-                <div class="item-container col-md-4">   
+                <div class="item-container col-md-4 <?=$item['loan_status']?>">
                     <div class="item-header">
                         <div class="item-header-content">
                             <span class="item-header-content-time">Listed <?=get_time_ago( strtotime($item['created']) );?></span>
