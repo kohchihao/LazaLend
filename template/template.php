@@ -90,7 +90,7 @@ function getAllPromotedItems() {
 
 }
 
-//Fetch all items in chrological order 
+//Fetch all items in chrological order and not borrowed
 function getAllItemsChronological() {
   $query = "SELECT 
   item.id AS item_id,
@@ -116,6 +116,7 @@ function getAllItemsChronological() {
   WHERE item.id = image.item_id 
   AND item.category_id = c.id
   AND item.user_id = u.id
+  AND item.borrowed = '0'
   ORDER BY item.last_updated DESC";
   
   $go_q = pg_query($query);

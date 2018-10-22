@@ -41,11 +41,16 @@ require $root . "template/01-head.php";
     <div class="finds-container">
         <?php foreach ($items as $item_id => $item) {?>
             <a href="view-listing?id=<?=$item_id?>">
-                <div class="item-container col-md-4 <?=$item['loan_status']?>">
+                <div class="item-container col-md-4">
+                    <div class="item-header">
+                        <div class="item-header-content <?=$item['loan_status']?>">
+                            <span class="text-dark"><?=$item['loan_status']?></span>
+                        </div>
+                    </div>
                     <div class="item-header">
                         <div class="item-header-content">
                             <span class="item-header-content-time">Listed <?=get_time_ago( strtotime($item['created']) );?></span>
-                        </div>
+                        </div>                       
                     </div>
                 
                     <div class="item-content">
